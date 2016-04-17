@@ -46,7 +46,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	_listModel.clear();
 		for(int i = 0 ; i < _makler_list.size(); i++){
 			Makler m = (Makler) _makler_list.get(i);
-			_listModel.addElement(i + " " + m.getName() + " " + m.getLogin());
+			_listModel.addElement(i + "-" + m.getName() + "-" + m.getLogin());
 		}		
 	}
 	private JPanel Generate_Eingabefelder(){
@@ -222,8 +222,33 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int index = _liste.getSelectedIndex();
-		//System.out.println(index);
+		
+		
+		Object source = e.getSource();
+		if(source.equals(_liste)){
+			int index = _liste.getSelectedIndex();
+			
+			DB2 db = new DB2();
+			
+			String ListElement = (String) _listModel.getElementAt(index);
+			
+			String[] split = ListElement.split("-");
+			
+			String Login = split[2];
+			
+			Makler m = db.Gib_Makler(Login);
+		
+			assert m != null : "Der Makler konnte nicht aus der Datenbank gelesen werden.";
+			
+			//TODO Richtige Werte einsetzen
+			
+			_name_ed.setText("Callya");
+			_adresse_ed.setText("Cappelstrasse 21,59555 Lippstadt");
+			_login_ed.setText("Callya");
+			_login_ed.setText("Passwort");
+		
+		}
+		
 		
 		
 		
