@@ -80,7 +80,51 @@ public class DB2 extends DB2ConnectionManager{
 		
 		
 	}
+	/**
+	 * CREATE Estate_Agent(
+     *	Name                varchar(255),
+     *	Addres              text,
+     *	Login               varchar(255) NOT NULL UNIQUE,
+     *	Passwort            varchar(255) NOT NULL,
+     *	PRIMARY KEY(Login)
+	 *	);
+	 * @param Login
+	 * @return Makler
+	 */
+	public Makler Gib_Makler(String Login){
+		
+		String Anfrage= "SELECT * FROM Estate_Agent WHERE Login='"+Login+"';";
+		//System.out.println(Anfrage);
+		try {
+			ResultSet result = this.SendQuery(Anfrage);
+			int size = 0; 
+			if(result == null){
+				return null;
+			}else{
+				size = result.getFetchSize();
+			}
+			System.out.println("size="+size);
+			String Name 	= result.getString(0); //Name varchar(255)
+			String Addres 	= result.getString(1);
+			String Login_id = result.getString(2);
+			String Pass		= result.getString(3);
+			
+			Makler m = new Makler();
+			m.setName(Name);
+			m.setAddress(Addres);
+			m.setLogin(Login_id);
+			m.setPassword(Pass);
+			
+			return m;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
 	
+		
+	}
 	
 
 }
