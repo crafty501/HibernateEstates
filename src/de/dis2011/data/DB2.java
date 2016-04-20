@@ -15,17 +15,23 @@ public class DB2 extends DB2ConnectionManager{
 	}
 	
 	
-	private ResultSet SendQuery(String S) throws SQLException {
+	private ResultSet SendQuery(String S, boolean update) throws SQLException {
 		
-		//try {
-			//Statement stm = this._con.createStatement();
-			//ResultSet rs = stm.executeQuery(S);
-			//return rs;
-			return null;
-		//} catch (SQLException e) {
-		//	throw e;
+		try {
+			Statement stm = this._con.createStatement();
+			if(update){
+				return stm.executeQuery(S);
+			}else{
+				stm.execute(S); 
+				return null;
+			}
 			
-		//}
+			
+			
+		} catch (SQLException e) {
+			throw e;
+			
+		}
 	}
 	
 	public void Save_new_Makler(Makler m){
@@ -40,7 +46,7 @@ public class DB2 extends DB2ConnectionManager{
 	    		       + "VALUES"
 	    		       + "('"+Name+"','"+Adresse+"','"+Login+"','"+Passwort+"')";
 	    	try{
-				this.SendQuery(Anfrage);
+				this.SendQuery(Anfrage,false);
 	    		System.out.println(Anfrage);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -53,7 +59,7 @@ public class DB2 extends DB2ConnectionManager{
 		String Anfrage = "SELECT * FROM Estate_Agent";
 		
 		try{
-			ResultSet s = this.SendQuery(Anfrage);
+			ResultSet s = this.SendQuery(Anfrage,true);
 			ArrayList liste = new ArrayList<Makler>();
 			while(s.next()){
 				
@@ -96,7 +102,7 @@ public class DB2 extends DB2ConnectionManager{
 		String Anfrage= "SELECT * FROM Estate_Agent WHERE Login='"+Login+"';";
 		//System.out.println(Anfrage);
 		try {
-			ResultSet result = this.SendQuery(Anfrage);
+			ResultSet result = this.SendQuery(Anfrage,true);
 			int size = 0; 
 			if(result == null){
 				return null;
