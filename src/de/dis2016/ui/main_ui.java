@@ -1,7 +1,6 @@
 package de.dis2016.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,7 +26,7 @@ public class main_ui extends JFrame implements ActionListener{
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("Hauptmenü"),
+                        BorderFactory.createTitledBorder("Hauptmenï¿½"),
                         BorderFactory.createEmptyBorder(5,5,5,5)),
         main.getBorder()));
 		
@@ -92,11 +91,11 @@ public class main_ui extends JFrame implements ActionListener{
 		
 		Object source = arg0.getSource();
 		if (source.equals(_estate_agents)){
-				_manager_ui.show();
+				_manager_ui.setVisible(true);
 		}
 		
 		if(source.equals(_estates)){
-				_login_ui.show();
+				_login_ui.setVisible(true);
 		}
 		
 		if(source.equals(_exit)){
