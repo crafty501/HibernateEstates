@@ -26,8 +26,10 @@ public class DB2 extends DB2ConnectionManager{
 	private ResultSet SendQuery(String S, boolean result) throws SQLException {
 		
 		try {
+
 			Statement stm = this._con.createStatement();
 			if(result){
+				
 				return stm.executeQuery(S);
 			}else{
 				stm.execute(S); 
@@ -58,23 +60,31 @@ public class DB2 extends DB2ConnectionManager{
 	    		System.out.println(Anfrage);
 			} catch (SQLException e) {
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Eggs are not supposed to be green.");
+				JOptionPane.showMessageDialog(null, "Die Anfrage konnte nicht verarbeitet werden!"+e.getMessage());
 			}
 	}
 	
 	public ArrayList<Makler> Gib_alle_Markler(){
 		
-		String Anfrage = "SELECT * FROM Estate_Agent";
+		String Anfrage = "SELECT NAME,ADDRES,LOGIN,PASSWORT FROM Estate_Agent";
 		
 		try{
 			ResultSet s = this.SendQuery(Anfrage,true);
+			System.out.println(Anfrage);
 			ArrayList liste = new ArrayList<Makler>();
+			
+		
+			
+			System.out.println("ResultSet row count = "+s.getRow());
+			
+			
+			if(s.getRow() != 0){
 			while(s.next()){
 				
-				String Name 	= s.getString(0);
-				String Adresse	= s.getString(1);
-				String Login 	= s.getString(2);
-				String Passwort = s.getString(3);
+				String Name 	= s.getString("NAME");
+				String Adresse	= s.getString("ADDRES");
+				String Login 	= s.getString("LOGIN");
+				String Passwort = s.getString("PASSWORT");
 				System.out.println(Name + " " + Adresse+ " " + Login + " " + Passwort);
 				
 				Makler m = new Makler();
@@ -84,6 +94,7 @@ public class DB2 extends DB2ConnectionManager{
 				m.setPassword(Passwort);
 				
 				liste.add(m);
+			}
 			}
 			
 			return liste;
