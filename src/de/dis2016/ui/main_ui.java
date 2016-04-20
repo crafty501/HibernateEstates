@@ -76,7 +76,7 @@ public class main_ui extends JFrame implements ActionListener{
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         // Determine the new location of the window
-        int w = this.getSize().width;
+        //int w = this.getSize().width;
         int h = this.getSize().height;
         int x = 100;
         int y = (dim.height-h)/2;
