@@ -29,7 +29,7 @@ public class DB2ConnectionManager {
 	 * Erzeugt eine Datenbank-Verbindung
 	 */
 	protected DB2ConnectionManager() {
-		/*
+		
 		try {
 			// Holen der Einstellungen aus der db2.properties Datei
 			Properties properties = new Properties();
@@ -44,6 +44,8 @@ public class DB2ConnectionManager {
 
 			// Verbindung zur DB2 herstellen
 			Class.forName("com.ibm.db2.jcc.DB2Driver");
+			
+			
 			_con = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPass);
 
 		} catch (FileNotFoundException e1) {
@@ -57,7 +59,7 @@ public class DB2ConnectionManager {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-*/
+
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class DB2ConnectionManager {
 	}
 
 	/**
-	 * Liefert eine Verbindung zur DB2 zurC<ck
+	 * Liefert eine Verbindung zur DB2 zurück
 	 * 
 	 * @return Connection
 	 */
