@@ -23,7 +23,7 @@ public class main_ui extends JFrame implements ActionListener{
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("HauptmenÃ¼"),
+                        BorderFactory.createTitledBorder("Hauptmenü"),
                         BorderFactory.createEmptyBorder(5,5,5,5)),
         main.getBorder()));
 		
