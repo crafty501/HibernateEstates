@@ -1,3 +1,4 @@
+
 package de.dis2011.data;
 
 import java.sql.ResultSet;
@@ -28,9 +29,13 @@ public class DB2 extends DB2ConnectionManager{
 		try {
 
 			Statement stm = this._con.createStatement();
+			
 			if(result){
-				
-				return stm.executeQuery(S);
+				if (stm.execute(S)){
+					return stm.getResultSet();
+				}else{
+					return	null;
+				}
 			}else{
 				stm.execute(S); 
 				return null;
