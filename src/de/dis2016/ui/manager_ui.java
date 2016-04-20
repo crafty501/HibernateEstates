@@ -1,13 +1,9 @@
 package de.dis2016.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.List;
-import java.awt.MenuContainer;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 
 import de.dis2011.data.DB2;
 import de.dis2011.data.Makler;
@@ -43,8 +38,8 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	JTextField _name_ed,_vorname_ed,_adresse_ed,_login_ed;
 	JPasswordField _password_ed;
 	JList _liste;
-	ArrayList _makler_list;
-	DefaultListModel _listModel;
+	ArrayList<Makler> _makler_list;
+	DefaultListModel<String> _listModel;
 	
 	private void UpdateUI(){
 	_listModel.clear();
@@ -139,7 +134,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
                         BorderFactory.createTitledBorder("Estate Agents"),
                         BorderFactory.createEmptyBorder(5,5,5,5)),
         main.getBorder()));
-		_listModel = new DefaultListModel();
+		_listModel = new DefaultListModel<String>();
 		_liste = new JList(_listModel);
 		_liste.addMouseListener(this);
 	//	_liste.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
