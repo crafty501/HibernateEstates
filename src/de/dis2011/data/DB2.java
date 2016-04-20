@@ -14,12 +14,20 @@ public class DB2 extends DB2ConnectionManager{
 		
 	}
 	
-	
-	private ResultSet SendQuery(String S, boolean update) throws SQLException {
+	/**
+	 * Diese Methode sendet eine SQL Anfrage an die Datenbank
+	 * und wirft ggf. eine SQLException 
+	 * @param S
+	 * 
+	 * @param result , falls die SQL-Anfrage ein Result hat muss hier true angegeben werden
+	 * @return
+	 * @throws SQLException
+	 */
+	private ResultSet SendQuery(String S, boolean result) throws SQLException {
 		
 		try {
 			Statement stm = this._con.createStatement();
-			if(update){
+			if(result){
 				return stm.executeQuery(S);
 			}else{
 				stm.execute(S); 
