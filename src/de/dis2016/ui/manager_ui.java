@@ -33,6 +33,10 @@ import de.dis2011.data.Makler;
 public class manager_ui extends JFrame implements ActionListener,MouseListener{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JButton _neu;
 	JButton _speichern;
 	JButton _ende;

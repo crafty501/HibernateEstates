@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 
 public class main_ui extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton _estate_agents,_estates,_contracts,_exit;
 	private manager_ui _manager_ui;
 	private login_ui _login_ui;

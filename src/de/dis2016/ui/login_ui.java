@@ -23,6 +23,10 @@ import javax.swing.ListSelectionModel;
 public class login_ui extends JFrame implements ActionListener{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JButton _abbrechen;
 	JButton _weiter;
 	private JPanel Generate_Eingabefelder(){
