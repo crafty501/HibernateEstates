@@ -41,13 +41,27 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	ArrayList<Makler> _makler_list;
 	DefaultListModel<String> _listModel;
 	
+	
 	private void UpdateUI(){
 	_listModel.clear();
+	
+	if(_makler_list.size() == 0){
+		
+		// Die MarklerListe ist noch komplett leer
+		System.out.println("MaklerListe ist noch komplett leer");
+		
+	}else{
 		for(int i = 0 ; i < _makler_list.size(); i++){
 			Makler m = (Makler) _makler_list.get(i);
 			_listModel.addElement(i + "-" + m.getName() + "-" + m.getLogin());
-		}		
+		}
+		
 	}
+	
+	}
+	
+	
+	
 	private JPanel Generate_Eingabefelder(){
 		
 		JPanel main = new JPanel();
@@ -151,13 +165,12 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	public manager_ui(){
 		super();
 		
-		
-		this._makler_list = new ArrayList<Makler>();
+		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
+		DB2 db = new DB2();
+		this._makler_list = db.Gib_alle_Markler();
 		
 		
 		this.setLayout(new BorderLayout());
-		
-		
 		JPanel Eingabe 	= this.Generate_Eingabefelder();
 		JPanel Leiste 	= this.ButtonLeiste();
 		JPanel Liste	= this.Generate_Liste();
@@ -169,15 +182,15 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		this.setTitle("Manage Estate Managers");
 		//Get the size of the screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
         // Determine the nfalseew location of the window
         int w = this.getSize().width;
         int h = this.getSize().height;
         int x = (dim.width-w)/2;
         int y = (dim.height-h)/2;
-
         // Move the window
         this.setLocation(x, y);
+        
+        this.UpdateUI();
 	}
 
 	@Override
@@ -229,22 +242,29 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			
 			DB2 db = new DB2();
 			
-			String ListElement = (String) _listModel.getElementAt(index);
+			System.out.println(index);
 			
-			String[] split = ListElement.split("-");
 			
-			String Login = split[2];
+			if( index != -1 ){ // Die Gui ist dann noch leer
+				
+				String ListElement = (String) _listModel.getElementAt(index);
+				String[] split = ListElement.split("-");
+				String Login = split[2];
 			
-			Makler m = db.Gib_Makler(Login);
+				Makler m = db.Gib_Makler(Login);
 		
-			assert m != null : "Der Makler konnte nicht aus der Datenbank gelesen werden.";
+				assert m != null : "Der Makler konnte nicht aus der Datenbank gelesen werden.";
 			
-			//TODO Richtige Werte einsetzen
+				String Name 		= m.getName();
+				String Adresse 		= m.getAddress();
+				String Loginname 	= m.getLogin();
+				String Passwort     = m.getPassword();
 			
-			_name_ed.setText("Callya");
-			_adresse_ed.setText("Cappelstrasse 21,59555 Lippstadt");
-			_login_ed.setText("Callya");
-			_login_ed.setText("Passwort");
+				_name_ed.setText(Name);
+				_adresse_ed.setText(Adresse);
+				_login_ed.setText(Loginname);
+				_login_ed.setText(Passwort);
+			}
 		
 		}
 		
