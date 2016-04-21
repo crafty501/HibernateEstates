@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import de.dis2011.data.DB2;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class main_ui extends JFrame implements ActionListener{
@@ -64,8 +65,10 @@ public class main_ui extends JFrame implements ActionListener{
 	
 		this._manager_ui = new manager_ui();
 		
+		DB2 db = new DB2();
+		
 		login = new EstatesFrame();
-		login.setPresenter(new EstatesPresenter(login));
+		login.setPresenter(new EstatesPresenter(login,db));
 		
 		this.setLayout(new BorderLayout());
 		JPanel menue = this.ButtonLeiste();

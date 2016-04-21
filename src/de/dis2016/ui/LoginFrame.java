@@ -2,13 +2,16 @@ package de.dis2016.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -16,7 +19,7 @@ import javax.swing.JTextField;
 
 import de.dis2016.presenter.EstatesPresenter;
 
-public class LoginPanel extends JPanel {
+public class LoginFrame extends JFrame {
 
 	/**
 	 * 
@@ -27,7 +30,7 @@ public class LoginPanel extends JPanel {
 	private JButton weiter;
 
 
-	public LoginPanel(final EstatesPresenter presenter) {
+	public LoginFrame(final EstatesPresenter presenter) {
 		super();
 
 		// textfields *************************
@@ -73,6 +76,8 @@ public class LoginPanel extends JPanel {
 
 		this.setLayout(new BorderLayout());
 
+		
+		
 		this.add(pnlTextfields, BorderLayout.CENTER);
 		this.add(pnlButtons, BorderLayout.SOUTH);
 
@@ -81,7 +86,7 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				presenter.logIn();
+				presenter.logIn(tfLogin.getText());
 
 			}
 		});
@@ -95,5 +100,21 @@ public class LoginPanel extends JPanel {
 				setVisible(false);
 			}
 		});
+		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
+		this.setSize(300, 400);
+		// Determine the new location of the window
+		int w = this.getSize().width;
+		int h = this.getSize().height;
+		int x = (dim.width - w) / 2;
+		int y = (dim.height - h) / 2;
+
+		// Move the window
+		this.setLocation(x, y);
+		
+		
+		this.setVisible(true);
+		this.setAlwaysOnTop(true);
 	}
 }

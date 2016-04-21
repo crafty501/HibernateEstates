@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 
 import javax.swing.BorderFactory;
@@ -19,7 +21,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import de.dis2011.data.Estate;
+import de.dis2011.data.House;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class EstatesFrame extends JFrame {
@@ -31,10 +36,18 @@ public class EstatesFrame extends JFrame {
 
 	private EstatesPresenter presenter;
 	
-	private JTable houses = new JTable();
-	private JTable apartments = new JTable();
+	String[] columnNames = {"id",
+            "name",
+            "street"};
 	
 	
+	final DefaultTableModel housesModel = new DefaultTableModel( columnNames, 0 );
+	final DefaultTableModel apartmentsModel = new DefaultTableModel( columnNames, 0 );
+
+	private JTable houses = new JTable(housesModel);
+	private JTable apartments = new JTable(apartmentsModel);
+	
+	private JButton loginButton;
 	private JButton createButton;
 	private JButton deleteButton;
 	private JButton modifyButton;
@@ -70,38 +83,47 @@ public class EstatesFrame extends JFrame {
 		this.setLocation(x, y);
 		
 		
+		loginButton = new JButton("login");
 		createButton = new JButton("create");
 		deleteButton = new JButton("delete");
 		modifyButton = new JButton("modify");
-		JPanel east = new JPanel();
-		east.setLayout(new FlowLayout());
-		east.add(createButton);
-		east.add(deleteButton);
-		east.add(modifyButton);
-		east.setSize(300,500);
-		east.setPreferredSize(new Dimension(300, 500));
+		JPanel pnlButtons = new JPanel();
+		pnlButtons.setLayout(new FlowLayout());
+		pnlButtons.add(createButton);
+		pnlButtons.add(deleteButton);
+		pnlButtons.add(modifyButton);
+		pnlButtons.add(loginButton);
+		pnlButtons.setSize(300,500);
+		pnlButtons.setPreferredSize(new Dimension(300, 500));
 		
-		this.add(BorderLayout.EAST, east);
+		this.add(pnlButtons,BorderLayout.NORTH);
 		
 		
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(0, 2));
 		center.add(new JScrollPane(houses));
+		houses.setFillsViewportHeight(true);
 		center.add(new JScrollPane(apartments));
+		apartments.setFillsViewportHeight(true);
+		
+		this.add(center, BorderLayout.CENTER);
 		
 		createButton.setEnabled(false);
 		deleteButton.setEnabled(false);
 		modifyButton.setEnabled(false);
+		
+		loginButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showLogin();
+			}
+		});
 	}
 	
 	
 	public void showLogin() {
-		JFrame loginwindow = new JFrame("login");
-		LoginPanel login = new LoginPanel(presenter);
-		login.setSize(500,500);
-		loginwindow.add(login);
-		login.setVisible(true);
-		this.add(BorderLayout.CENTER, login);
+		new LoginFrame(presenter);
 		
 		createButton.setEnabled(false);
 		deleteButton.setEnabled(false);
@@ -111,10 +133,13 @@ public class EstatesFrame extends JFrame {
     
 	
 	
-	public void showEstates() {
+	public void setHouses(List<House> list) {
 		createButton.setEnabled(true);
 		deleteButton.setEnabled(true);
 		modifyButton.setEnabled(true);
+		
+		
+		//housesModel.setDataVector(list, columnNames);
 	}
 	
 	

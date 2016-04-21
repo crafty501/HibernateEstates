@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -154,6 +156,11 @@ public class DB2 extends DB2ConnectionManager{
 		
 	
 		
+	}
+
+	public List<House> getHouses(String login) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
