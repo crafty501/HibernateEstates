@@ -10,15 +10,11 @@ public class Main {
 	 * Startet die Anwendung
 	 */
 	public static void main(String[] args) {
-			//showMainMenu();
-		
-		
-			main_ui main_ui = new main_ui();
-			main_ui.setSize(230,200);
-			main_ui.setVisible(true);
-			
+
+		// showMainMenu();
+		main_ui main_ui = new main_ui();
+		main_ui.setSize(230, 200);
+		main_ui.setVisible(true);
 	}
 
-	
-	
 }

@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import de.dis2016.presenter.EstatesPresenter;
+
 public class main_ui extends JFrame implements ActionListener{
 
 	/**
@@ -19,7 +21,7 @@ public class main_ui extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JButton _estate_agents,_estates,_contracts,_exit;
 	private manager_ui _manager_ui;
-	private login_ui _login_ui;
+	private EstatesFrame login;
 	
 	private JPanel ButtonLeiste(){
 		
@@ -61,7 +63,9 @@ public class main_ui extends JFrame implements ActionListener{
 		super();
 	
 		this._manager_ui = new manager_ui();
-		this._login_ui = new login_ui();
+		
+		login = new EstatesFrame();
+		login.setPresenter(new EstatesPresenter(login));
 		
 		this.setLayout(new BorderLayout());
 		JPanel menue = this.ButtonLeiste();
@@ -95,7 +99,7 @@ public class main_ui extends JFrame implements ActionListener{
 		}
 		
 		if(source.equals(_estates)){
-				_login_ui.setVisible(true);
+				login.setVisible(true);
 		}
 		
 		if(source.equals(_exit)){
