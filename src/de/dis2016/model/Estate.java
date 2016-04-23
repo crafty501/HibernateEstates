@@ -1,7 +1,7 @@
 package de.dis2016.model;
 
 
-public class Estate {
+public abstract class Estate {
 	private String id;
 	private String city;
 	private String postalCode;

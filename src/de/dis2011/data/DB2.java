@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
+import de.dis2016.model.Estate;
 import de.dis2016.model.House;
 
 public class DB2 extends DB2ConnectionManager{
@@ -161,6 +162,11 @@ public class DB2 extends DB2ConnectionManager{
 	}
 
 	public List<House> getHouses(String login) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Estate> getEstates(String login) {
 		// TODO Auto-generated method stub
 		return null;
 	}

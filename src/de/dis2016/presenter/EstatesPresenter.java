@@ -22,7 +22,7 @@ public class EstatesPresenter {
 		boolean success = true;
 		if (success) {
 			
-			view.setHouses(data.getHouses(login));
+			view.setEstates(data.getEstates(login));
 		}
 		
 	}
