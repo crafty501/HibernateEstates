@@ -39,7 +39,7 @@ public class DeleteEstateFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				presenter.deleteEstate(makler, estate);
+				presenter.deleteEstate(estate);
 				setVisible(false);
 				dispose();
 				

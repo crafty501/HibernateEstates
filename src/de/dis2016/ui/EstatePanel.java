@@ -20,12 +20,16 @@ public abstract class EstatePanel extends JPanel{
 	private final JTextField tfStreet;
 	private final JTextField tfStreetNr;
 	private final JTextField tfsquareArea;
+	private final JTextField tfPersonId;
 	
 	private final JLabel lbCity;
 	private final JLabel lbPostalCode;
 	private final JLabel lbStreet;
 	private final JLabel lbStreetNr;
 	private final JLabel lbSquareArea;
+	private final JLabel lbPersonId;
+	
+	
 	
 	public EstatePanel() {
 		tfCity = new JTextField();
@@ -33,11 +37,14 @@ public abstract class EstatePanel extends JPanel{
 		tfsquareArea = new JTextField();
 		tfStreet = new JTextField();
 		tfStreetNr = new JTextField();
+		tfPersonId = new JTextField();
 		lbCity = new JLabel("city");
 		lbPostalCode = new JLabel("code");
 		lbSquareArea = new JLabel("qm");
 		lbStreet = new JLabel("streen");
 		lbStreetNr = new JLabel("streetnr");
+		lbPersonId = new JLabel("personid");
+		
 		
 		setLayout(new GridLayout(0, 2));
 		add(lbCity);
@@ -50,6 +57,8 @@ public abstract class EstatePanel extends JPanel{
 		add(tfStreetNr);
 		add(lbSquareArea);
 		add(tfsquareArea);
+		add(lbPersonId);
+		add(tfPersonId);
 	}
 	
 	
@@ -59,11 +68,13 @@ public abstract class EstatePanel extends JPanel{
 		tfsquareArea = new JTextField();
 		tfStreet = new JTextField();
 		tfStreetNr = new JTextField();
+		tfPersonId = new JTextField();
 		lbCity = new JLabel("city");
 		lbPostalCode = new JLabel("code");
 		lbSquareArea = new JLabel("qm");
 		lbStreet = new JLabel("streen");
 		lbStreetNr = new JLabel("streetnr");
+		lbPersonId = new JLabel("personid");
 		
 		setLayout(new GridLayout(0, 2));
 		add(lbCity);
@@ -76,6 +87,8 @@ public abstract class EstatePanel extends JPanel{
 		add(tfStreetNr);
 		add(lbSquareArea);
 		add(tfsquareArea);
+		add(lbPersonId);
+		add(tfPersonId);
 		
 		tfCity.setText(estate.getCity());
 		tfPostalCode.setText(estate.getPostalCode());
@@ -112,6 +125,13 @@ public abstract class EstatePanel extends JPanel{
 		tfsquareArea.setEditable(b);
 		tfStreet.setEditable(b);
 		tfStreetNr.setEditable(b);
+		tfPersonId.setEditable(b);
+	}
+	
+
+
+	public int getPersonId() {
+		return Integer.parseInt(tfPersonId.getText());
 	}
 
 }

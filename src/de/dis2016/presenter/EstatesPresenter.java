@@ -24,35 +24,35 @@ public class EstatesPresenter {
 		boolean success = true;
 		if (success) {
 			view.setMakler(makler);
-			view.setEstates(data.getEstates(makler));
+			view.setEstates(data.getEstates(login));
 		}
 		return success;
 		
 	}
 
 
-	public void deleteEstate(Makler makler, Estate estate) {
-		data.deleteEstate(makler,estate);
-		view.setEstates(data.getEstates(makler));
+	public void deleteEstate(Estate estate) {
+		data.deleteEstate(estate);
+		view.setEstates(data.getEstates(estate.getLogin()));
 	}
 
 
 
-	public void addHouse(Makler makler, House house) {
-		data.addHouse(makler,house);
-		view.setEstates(data.getEstates(makler));		
+	public void addHouse(House house) {
+		data.addHouse(house);
+		view.setEstates(data.getEstates(house.getLogin()));		
 	}
 
 
-	public void addApartment(Makler makler, Apartment apartment) {
-		data.addApartment(makler, apartment);
-		view.setEstates(data.getEstates(makler));
+	public void addApartment(Apartment apartment) {
+		data.addApartment(apartment);
+		view.setEstates(data.getEstates(apartment.getLogin()));
 	}
 
 
-	public void updateEstate(Makler makler, Estate estate) {
-		data.updateEstate(makler, estate);
-		view.setEstates(data.getEstates(makler));
+	public void updateEstate(Estate estate) {
+		data.updateEstate(estate);
+		view.setEstates(data.getEstates(estate.getLogin()));
 	}
 	
 }

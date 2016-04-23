@@ -8,16 +8,22 @@ public abstract class Estate {
 	private String street;
 	private String streetNr;
 	private String squareArea;
+	private String login;
+	private int personid;
+	private int contractnr;
 	
 	
 	
-	public Estate(String id, String city, String postalCode, String street, String streetNr, String squareArea) {
+	public Estate(String id, String city, String postalCode, String street, String streetNr, String squareArea, String login, int personid, int contractnr) {
 		this.id = id;
 		this.city = city;
 		this.postalCode = postalCode;
 		this.street = street;
 		this.streetNr = streetNr;
 		this.squareArea = squareArea;
+		this.login = login;
+		this. personid = personid;
+		this.contractnr = contractnr;
 	}
 	public String getId() {
 		return id;
@@ -54,6 +60,24 @@ public abstract class Estate {
 	}
 	public void setSquareArea(String squareArea) {
 		this.squareArea = squareArea;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public int getPersonid() {
+		return personid;
+	}
+	public void setPersonid(int personid) {
+		this.personid = personid;
+	}
+	public int getContractnr() {
+		return contractnr;
+	}
+	public void setContractnr(int contractnr) {
+		this.contractnr = contractnr;
 	}
 	
 	

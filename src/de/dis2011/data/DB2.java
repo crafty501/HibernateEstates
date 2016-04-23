@@ -158,27 +158,29 @@ public class DB2 extends DB2ConnectionManager {
 		return null;
 	}
 
-	public List<Estate> getEstates(Makler makler) {
+	public List<Estate> getEstates(String login) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean deleteEstate(Makler makler, Estate estate) {
+	public boolean deleteEstate(Estate estate) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	public boolean addApartment(Makler makler, Apartment apartment) {
+	public boolean addApartment(Apartment apartment) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	public void addHouse(Makler makler, House house) {
+	public void addHouse(House house) {
 		
 		
 		int contractNr = new Random(20000).nextInt();
+		house.setContractnr(contractNr);
+		
 		try {
-			Estate e = addEstate(makler, house, contractNr);
+			Estate e = addEstate(house);
 			e.getId();
 			
 			
@@ -194,13 +196,13 @@ public class DB2 extends DB2ConnectionManager {
 	private static final String ADD_APARTMENT = "INSERT Apartment Estate (ID,City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	
-	private Estate addEstate(Makler makler, Estate house, int contractnr) throws SQLException {
+	private Estate addEstate(Estate house) throws SQLException {
 		PreparedStatement addEstate = con.prepareStatement(ADD_ESTATE);
 		return house;
 
 	}
 
-	public void updateEstate(Makler makler, Estate estate) {
+	public void updateEstate(Estate estate) {
 		// TODO Auto-generated method stub
 
 	}

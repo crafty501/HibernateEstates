@@ -43,8 +43,8 @@ public class CreateApartmentFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Apartment apartment = new Apartment("", panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(),panel.getFloor(),panel.getRent(),panel.getRooms(),panel.hasKitchen(),panel.hasBalcony());
-				presenter.addApartment(makler,apartment);
+				Apartment apartment = new Apartment("", panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(),panel.getFloor(),panel.getRent(),panel.getRooms(),panel.hasKitchen(),panel.hasBalcony(), makler.getLogin(), panel.getPersonId(), 0);
+				presenter.addApartment(apartment);
 
 //				boolean success = 				if (success) {
 //					setVisible(false);

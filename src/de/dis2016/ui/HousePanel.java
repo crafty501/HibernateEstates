@@ -13,10 +13,12 @@ public class HousePanel extends EstatePanel {
 	private final JTextField tfFloors;
 	private final JTextField tfPrice;
 	private final JCheckBox cbxGarden;
+
 	
 	private final JLabel lbFloors;
 	private final JLabel lbPrice;
 	private final JLabel lbGarden;
+
 	/**
 	 * 
 	 */
@@ -31,12 +33,14 @@ public class HousePanel extends EstatePanel {
 		lbGarden = new JLabel("garden");
 		lbPrice = new JLabel("price");
 		
+		
 		add(lbFloors);
 		add(tfFloors);
 		add(lbPrice);
 		add(tfPrice);
 		add(lbGarden);
 		add(cbxGarden);
+
 	}
 	
 	

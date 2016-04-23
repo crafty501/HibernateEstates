@@ -36,7 +36,7 @@ public class ModifyEstateFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				presenter.updateEstate(makler, estate);
+				presenter.updateEstate(estate);
 				
 //				boolean success = presenter.updateEstate(makler, estate);
 //				if (success) {
