@@ -22,6 +22,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import de.dis2016.model.Apartment;
@@ -37,40 +42,37 @@ public class EstatesFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private EstatesPresenter presenter;
-	
-	String[] columnNames = {"id",
-            "name",
-            "street"};
-	
+	private String login;
 
-	//final DefaultTableModel housesModel = new DefaultTableModel( columnNames, 0 );
-	//final DefaultTableModel apartmentsModel = new DefaultTableModel( columnNames, 0 );
+	private EstatesPresenter presenter;
+
+	String[] columnNames = { "id", "name", "street" };
+
+	// final DefaultTableModel housesModel = new DefaultTableModel( columnNames,
+	// 0 );
+	// final DefaultTableModel apartmentsModel = new DefaultTableModel(
+	// columnNames, 0 );
 
 	private JTable estates = new JTable();
 
-	//private JTable houses = new JTable(housesModel);
-	//private JTable apartments = new JTable(apartmentsModel);
-	
-	
+	// private JTable houses = new JTable(housesModel);
+	// private JTable apartments = new JTable(apartmentsModel);
+
 	private JButton loginButton;
-	private JButton createButton;
+	private JButton createHouseButton;
+	private JButton createApartmentButton;
 	private JButton deleteButton;
 	private JButton modifyButton;
-	
-	
+
 	private JTextField id;
 	private JTextField street;
 	private JTextField streetNo;
 	private JTextField squareArea;
 	private JTextField postalCode;
-	
-	
-	
 
 	public EstatesFrame() {
 		super();
-		
+
 		this.setLayout(new BorderLayout());
 		this.setSize(800, 600);
 		this.setMinimumSize(new Dimension(800, 600));
@@ -87,63 +89,96 @@ public class EstatesFrame extends JFrame {
 
 		// Move the window
 		this.setLocation(x, y);
-		
-		
+
 		loginButton = new JButton("login");
-		createButton = new JButton("create");
+		createHouseButton = new JButton("new house");
+		createApartmentButton = new JButton("new appartment");
 		deleteButton = new JButton("delete");
 		modifyButton = new JButton("modify");
 		JPanel pnlButtons = new JPanel();
 		pnlButtons.setLayout(new FlowLayout());
-		pnlButtons.add(createButton);
+		pnlButtons.add(createHouseButton);
+		pnlButtons.add(createApartmentButton);
 		pnlButtons.add(deleteButton);
 		pnlButtons.add(modifyButton);
 		pnlButtons.add(loginButton);
-		//pnlButtons.setSize(300,500);
-		//pnlButtons.setPreferredSize(new Dimension(300, 500));
-		
-		this.add(pnlButtons,BorderLayout.NORTH);
-		
-		
-		//JPanel center = new JPanel();
-		//center.setLayout(new GridLayout(0, 2));
-		//center.add(new JScrollPane(houses));
-		//houses.setFillsViewportHeight(true);
-		//center.add(new JScrollPane(apartments));
-		//apartments.setFillsViewportHeight(true);
-		
-		//this.add(center, BorderLayout.CENTER);
-		
+		// pnlButtons.setSize(300,500);
+		// pnlButtons.setPreferredSize(new Dimension(300, 500));
+
+		this.add(pnlButtons, BorderLayout.NORTH);
+
+		// JPanel center = new JPanel();
+		// center.setLayout(new GridLayout(0, 2));
+		// center.add(new JScrollPane(houses));
+		// houses.setFillsViewportHeight(true);
+		// center.add(new JScrollPane(apartments));
+		// apartments.setFillsViewportHeight(true);
+
+		// this.add(center, BorderLayout.CENTER);
+
 		this.add(new JScrollPane(estates), BorderLayout.CENTER);
 
-		
-		createButton.setEnabled(false);
+		createHouseButton.setEnabled(false);
+		createApartmentButton.setEnabled(false);
 		deleteButton.setEnabled(false);
 		modifyButton.setEnabled(false);
-		
-		loginButton.addActionListener(new ActionListener() {
-			
+
+		estates.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		estates.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				showLogin();
+			public void valueChanged(ListSelectionEvent e) {
+				if (e.getValueIsAdjusting()) {
+					return;
+				}
+				System.out.println(estates.getSelectedRow());
 			}
 		});
+
+		loginButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new LoginFrame(presenter);
+			}
+		});
+		createHouseButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new CreateHouseFrame(presenter);
+			}
+		});
+		createApartmentButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new CreateApartmentFrame(presenter);
+			}
+		});
+		deleteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
+				new ModifyEstateFrame(presenter, estate);
+			}
+		});
+		modifyButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
+				new DeleteEstateFrame(presenter, estate);
+			}
+		});
+
 	}
-	
-	
-	public void showLogin() {
-		new LoginFrame(presenter);
-		
-		createButton.setEnabled(false);
-		deleteButton.setEnabled(false);
-		modifyButton.setEnabled(false);
-	}
-	
-    
-	
-	
+
 	public void setEstates(List<Estate> list) {
-		createButton.setEnabled(true);
+		createHouseButton.setEnabled(true);
+		createApartmentButton.setEnabled(true);
 		deleteButton.setEnabled(true);
 		modifyButton.setEnabled(true);
 		
@@ -161,11 +196,13 @@ public class EstatesFrame extends JFrame {
 		
 		estates.setModel(new EstateTableModel(list));
 	}
-	
-	
-	public void setPresenter(EstatesPresenter pres) {
-        presenter = pres;
-    }
 
+	public void setPresenter(EstatesPresenter pres) {
+		presenter = pres;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
 }

@@ -17,9 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import de.dis2016.model.Estate;
 import de.dis2016.presenter.EstatesPresenter;
 
-public class LoginFrame extends JFrame {
+public class DeleteEstateFrame extends JFrame {
 
 	/**
 	 * 
@@ -30,7 +31,7 @@ public class LoginFrame extends JFrame {
 	private JButton weiter;
 
 
-	public LoginFrame(final EstatesPresenter presenter) {
+	public DeleteEstateFrame(final EstatesPresenter presenter, Estate estate) {
 		super();
 
 		// textfields *************************
@@ -86,11 +87,8 @@ public class LoginFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				boolean success = presenter.logIn(tfLogin.getText());
-				if(success) {
-					setVisible(false);
-					dispose();
-				}
+				presenter.logIn(tfLogin.getText());
+
 			}
 		});
 

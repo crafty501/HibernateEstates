@@ -55,5 +55,9 @@ public class EstateTableModel extends AbstractTableModel{
 
         return value;
 	}
+	
+	public Estate getEstateAt(int row) {
+        return estates.get(row);
+    }
 
 }

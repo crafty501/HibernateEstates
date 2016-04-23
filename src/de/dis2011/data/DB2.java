@@ -170,6 +170,11 @@ public class DB2 extends DB2ConnectionManager{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void deleteEstate(String login, Estate estate) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
