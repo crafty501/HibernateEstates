@@ -44,6 +44,8 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 
 				House house = new House("", panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), 0);
 				presenter.addHouse(house);
+				setVisible(false);
+				dispose();
 //				boolean success = presenter.addHouse(makler,house);
 //				if (success) {
 //					setVisible(false);

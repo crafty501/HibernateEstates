@@ -7,14 +7,14 @@ public abstract class Estate {
 	private String postalCode;
 	private String street;
 	private String streetNr;
-	private String squareArea;
+	private int squareArea;
 	private String login;
 	private int personid;
 	private int contractnr;
 	
 	
 	
-	public Estate(String id, String city, String postalCode, String street, String streetNr, String squareArea, String login, int personid, int contractnr) {
+	public Estate(String id, String city, String postalCode, String street, String streetNr, int squareArea, String login, int personid, int contractnr) {
 		this.id = id;
 		this.city = city;
 		this.postalCode = postalCode;
@@ -55,10 +55,10 @@ public abstract class Estate {
 	public void setStreetNr(String streetNr) {
 		this.streetNr = streetNr;
 	}
-	public String getSuareArea() {
+	public int getSuareArea() {
 		return squareArea;
 	}
-	public void setSquareArea(String squareArea) {
+	public void setSquareArea(int squareArea) {
 		this.squareArea = squareArea;
 	}
 	public String getLogin() {

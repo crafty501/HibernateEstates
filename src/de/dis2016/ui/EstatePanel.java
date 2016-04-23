@@ -92,9 +92,10 @@ public abstract class EstatePanel extends JPanel{
 		
 		tfCity.setText(estate.getCity());
 		tfPostalCode.setText(estate.getPostalCode());
-		tfsquareArea.setText(estate.getSuareArea());
+		tfsquareArea.setText(String.valueOf(estate.getSuareArea()));
 		tfStreet.setText(estate.getStreet());
 		tfStreetNr.setText(estate.getStreetNr());
+		tfPersonId.setText(String.valueOf(estate.getPersonid()));
 
 	}
 	
@@ -114,8 +115,8 @@ public abstract class EstatePanel extends JPanel{
 		return tfStreetNr.getText();
 	}
 	
-	public String getSuareArea() {
-		return tfsquareArea.getText();
+	public int getSuareArea() {
+		return Integer.parseInt(tfsquareArea.getText());
 	}
 
 	

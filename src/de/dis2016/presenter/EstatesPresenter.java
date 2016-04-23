@@ -21,7 +21,16 @@ public class EstatesPresenter {
 	public boolean logIn(String login) {
 		// TODO Auto-generated method stub
 		Makler makler = data.Gib_Makler(login);
-		boolean success = true;
+		
+		//TODO loeschen
+		makler = new Makler();
+		makler.setLogin("text");
+//		***************
+		boolean success = false;
+		if (makler!=null) {
+			success = true;
+		}
+		
 		if (success) {
 			view.setMakler(makler);
 			view.setEstates(data.getEstates(login));

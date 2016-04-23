@@ -173,33 +173,58 @@ public class DB2 extends DB2ConnectionManager {
 		return true;
 	}
 
+	public int createContract() {
+		return new Random(20000).nextInt();
+	}
+
+	private static final String ADD_HOUSE = "INSERT INTO House (ESTATE_ID,Floors,Price,Garden,person_id,purchase_contract) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 	public void addHouse(House house) {
-		
-		
-		int contractNr = new Random(20000).nextInt();
-		house.setContractnr(contractNr);
-		
+
 		try {
-			Estate e = addEstate(house);
-			e.getId();
+			int id = addEstate(house);
+
+			PreparedStatement addHouse = con.prepareStatement(ADD_ESTATE);
+
+			addHouse.setInt(1, id);
+			addHouse.setInt(2, house.getFloors());
+			addHouse.setInt(3, house.getPrice());
+			addHouse.setInt(4, house.isGarden() ? 1 : 0);
+			addHouse.setInt(3, house.getPersonid());
+			addHouse.setInt(3, house.getContractnr());
 			
-			
-			
+			addHouse.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private static final String ADD_ESTATE = "INSERT INTO Estate (ID,City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String ADD_HOUSE = "INSERT INTO House (ESTATE_ID,Floors,Price,Garden,person_id,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String ADD_APARTMENT = "INSERT Apartment Estate (ID,City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	
-	private Estate addEstate(Estate house) throws SQLException {
-		PreparedStatement addEstate = con.prepareStatement(ADD_ESTATE);
-		return house;
+	private static final String ADD_ESTATE = "INSERT INTO Estate (City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+	private int addEstate(Estate estate) throws SQLException {
+
+		estate.setContractnr(createContract());
+		PreparedStatement addEstate = con.prepareStatement(ADD_ESTATE);
+
+		addEstate.setString(1,estate.getCity());
+		addEstate.setString(2,estate.getPostalCode());
+		addEstate.setString(3,estate.getStreet());
+		addEstate.setString(4,estate.getStreetNr());
+		addEstate.setInt(5,estate.getSuareArea());
+		addEstate.setString(6,estate.getLogin());
+		addEstate.setInt(6,estate.getPersonid());
+		addEstate.setInt(6,estate.getContractnr());
+		
+		addEstate.executeUpdate();
+		
+		ResultSet rs = addEstate.getGeneratedKeys();
+		if(rs.next()) {
+			  return rs.getInt(1);
+		}
+		return -1;
 	}
 
 	public void updateEstate(Estate estate) {

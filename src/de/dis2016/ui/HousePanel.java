@@ -66,12 +66,12 @@ public class HousePanel extends EstatePanel {
 	}
 
 
-	public String getFloors() {
-		return tfFloors.getText();
+	public int getFloors() {
+		return Integer.parseInt(tfFloors.getText());
 	}
 	
-	public String getPrice() {
-		return tfPrice.getText();
+	public int getPrice() {
+		return Integer.parseInt(tfPrice.getText());
 	}
 	
 	public boolean hasGarden() {
