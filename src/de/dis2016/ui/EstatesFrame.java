@@ -1,33 +1,22 @@
 package de.dis2016.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.BrokenBarrierException;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Estate;
@@ -64,11 +53,6 @@ public class EstatesFrame extends JFrame {
 	private JButton deleteButton;
 	private JButton modifyButton;
 
-	private JTextField id;
-	private JTextField street;
-	private JTextField streetNo;
-	private JTextField squareArea;
-	private JTextField postalCode;
 
 	public EstatesFrame() {
 		super();
@@ -147,30 +131,34 @@ public class EstatesFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new CreateHouseFrame(presenter);
+				new CreateHouseFrame(presenter,login);
 			}
 		});
 		createApartmentButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CreateApartmentFrame(presenter);
-			}
-		});
-		deleteButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
-				new ModifyEstateFrame(presenter, estate);
+				new CreateApartmentFrame(presenter,login);
 			}
 		});
 		modifyButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
-				new DeleteEstateFrame(presenter, estate);
+				if (estates.getSelectedRow() != -1) {
+					Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
+					new ModifyEstateFrame(presenter,login, estate);	
+				}
+			}
+		});
+		deleteButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (estates.getSelectedRow() != -1) {
+					Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
+					new DeleteEstateFrame(presenter,login, estate);
+				}
 			}
 		});
 
