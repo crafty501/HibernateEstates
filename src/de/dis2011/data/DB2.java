@@ -10,6 +10,8 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
+import de.dis2016.model.House;
+
 public class DB2 extends DB2ConnectionManager{
 	
 	public DB2 (){

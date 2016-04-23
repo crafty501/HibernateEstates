@@ -23,8 +23,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import de.dis2011.data.Estate;
-import de.dis2011.data.House;
+import de.dis2016.model.Estate;
+import de.dis2016.model.House;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class EstatesFrame extends JFrame {
