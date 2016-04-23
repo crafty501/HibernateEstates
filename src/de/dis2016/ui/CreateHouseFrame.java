@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import de.dis2011.data.Makler;
 import de.dis2016.model.House;
 import de.dis2016.presenter.EstatesPresenter;
 
@@ -28,7 +29,7 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 	private static final long serialVersionUID = 1L;
 
 
-	public CreateHouseFrame(final EstatesPresenter presenter,final String login) {
+	public CreateHouseFrame(final EstatesPresenter presenter,final Makler makler) {
 		super();
 
 		final HousePanel panel = new HousePanel();
@@ -42,11 +43,12 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				House house = new House("", panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden());
-				boolean success = presenter.addHouse(login,house);
-				if (success) {
-					setVisible(false);
-					dispose();
-				}
+				presenter.addHouse(makler,house);
+//				boolean success = presenter.addHouse(makler,house);
+//				if (success) {
+//					setVisible(false);
+//					dispose();
+//				}
 			}
 		});
 	}

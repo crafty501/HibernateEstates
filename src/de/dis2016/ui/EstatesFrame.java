@@ -18,6 +18,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.dis2011.data.Makler;
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Estate;
 import de.dis2016.model.EstateTableModel;
@@ -31,7 +32,6 @@ public class EstatesFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String login;
 
 	private EstatesPresenter presenter;
 
@@ -52,6 +52,8 @@ public class EstatesFrame extends JFrame {
 	private JButton createApartmentButton;
 	private JButton deleteButton;
 	private JButton modifyButton;
+
+	private Makler makler;
 
 
 	public EstatesFrame() {
@@ -131,14 +133,14 @@ public class EstatesFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new CreateHouseFrame(presenter,login);
+				new CreateHouseFrame(presenter,makler);
 			}
 		});
 		createApartmentButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CreateApartmentFrame(presenter,login);
+				new CreateApartmentFrame(presenter,makler);
 			}
 		});
 		modifyButton.addActionListener(new ActionListener() {
@@ -147,7 +149,7 @@ public class EstatesFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (estates.getSelectedRow() != -1) {
 					Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
-					new ModifyEstateFrame(presenter,login, estate);	
+					new ModifyEstateFrame(presenter,makler, estate);	
 				}
 			}
 		});
@@ -157,7 +159,7 @@ public class EstatesFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (estates.getSelectedRow() != -1) {
 					Estate estate = ((EstateTableModel) estates.getModel()).getEstateAt(estates.getSelectedRow());
-					new DeleteEstateFrame(presenter,login, estate);
+					new DeleteEstateFrame(presenter,makler, estate);
 				}
 			}
 		});
@@ -189,8 +191,9 @@ public class EstatesFrame extends JFrame {
 		presenter = pres;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setMakler(Makler makler) {
+		this.makler = makler;
+		
 	}
 
 }

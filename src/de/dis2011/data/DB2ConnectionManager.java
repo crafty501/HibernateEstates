@@ -23,7 +23,7 @@ public class DB2ConnectionManager {
 	private static DB2ConnectionManager _instance = null;
 
 	// DB2 connection
-	protected Connection _con;
+	protected Connection con;
 
 	/**
 	 * Erzeugt eine Datenbank-Verbindung
@@ -46,7 +46,7 @@ public class DB2ConnectionManager {
 			Class.forName("com.ibm.db2.jcc.DB2Driver");
 			
 			
-			_con = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPass);
+			con = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPass);
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -75,12 +75,12 @@ public class DB2ConnectionManager {
 	}
 
 	/**
-	 * Liefert eine Verbindung zur DB2 zurück
+	 * Liefert eine Verbindung zur DB2 zurï¿½ck
 	 * 
 	 * @return Connection
 	 */
 	public Connection getConnection() {
-		return _con;
+		return con;
 	}
 
 }

@@ -1,8 +1,7 @@
 package de.dis2016.presenter;
 
-import java.util.Vector;
-
 import de.dis2011.data.DB2;
+import de.dis2011.data.Makler;
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Estate;
 import de.dis2016.model.House;
@@ -18,50 +17,42 @@ public class EstatesPresenter {
 		this.data = data;
 	}
 	
-	
 
 	public boolean logIn(String login) {
 		// TODO Auto-generated method stub
+		Makler makler = data.Gib_Makler(login);
 		boolean success = true;
 		if (success) {
-			view.setLogin(login);
-			view.setEstates(data.getEstates(login));
+			view.setMakler(makler);
+			view.setEstates(data.getEstates(makler));
 		}
 		return success;
 		
 	}
 
 
-	public boolean deleteEstate(String login, Estate estate) {
-		boolean success = data.deleteEstate(login,estate);
-		view.setEstates(data.getEstates(login));
-		//TODO
-		return success;
+	public void deleteEstate(Makler makler, Estate estate) {
+		data.deleteEstate(makler,estate);
+		view.setEstates(data.getEstates(makler));
 	}
 
 
 
-	public boolean addHouse(String login, House house) {
-		
-		view.setEstates(data.getEstates(login));
-		//TODO
-		return true;		
+	public void addHouse(Makler makler, House house) {
+		data.addHouse(makler,house);
+		view.setEstates(data.getEstates(makler));		
 	}
 
 
-
-	public boolean addApartment(String login, Apartment apartment) {
-		view.setEstates(data.getEstates(login));
-		// TODO Auto-generated method stub
-		return false;
+	public void addApartment(Makler makler, Apartment apartment) {
+		data.addApartment(makler, apartment);
+		view.setEstates(data.getEstates(makler));
 	}
 
 
-
-	public boolean updateEstate(String login, Estate estate) {
-		view.setEstates(data.getEstates(login));
-		// TODO Auto-generated method stub
-		return false;
+	public void updateEstate(Makler makler, Estate estate) {
+		data.updateEstate(makler, estate);
+		view.setEstates(data.getEstates(makler));
 	}
 	
 }

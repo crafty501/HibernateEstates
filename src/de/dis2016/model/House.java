@@ -5,17 +5,18 @@ public class House extends Estate{
 	private String floors;
 	private String price;
 	private boolean garden;
-	
+	private Person person;
 	
 	
 	
 	
 	public House(String id, String city, String postalCode, String street, String streetNr, String squareArea,
-			String floors, String price, boolean garden) {
+			String floors, String price, boolean garden, Person person) {
 		super(id, city, postalCode, street, streetNr, squareArea);
 		this.floors = floors;
 		this.price = price;
 		this.garden = garden;
+		this.person = person;
 	}
 	public String getFloors() {
 		return floors;
@@ -34,6 +35,12 @@ public class House extends Estate{
 	}
 	public void setGarden(boolean garden) {
 		this.garden = garden;
+	}
+	public Person getSells() {
+		return person;
+	}
+	public void setSells(Person sells) {
+		this.person = sells;
 	}
 	
 	
