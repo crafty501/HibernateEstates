@@ -51,6 +51,8 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		System.out.println("MaklerListe ist noch komplett leer");
 		
 	}else{
+		DB2 db = new DB2();
+		_makler_list = db.Gib_alle_Markler();
 		for(int i = 0 ; i < _makler_list.size(); i++){
 			Makler m = (Makler) _makler_list.get(i);
 			_listModel.addElement(i + "-" + m.getName() + "-" + m.getLogin());
@@ -223,6 +225,31 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			this.UpdateUI();
 		}
 		
+		if(source.equals(_speichern)){
+			DB2 db = new DB2();
+			String Adresse 	= this._adresse_ed.getText();
+			String Name 	= this._name_ed.getText();
+			String Login	= this._login_ed.getText();
+			String Passwort = this._password_ed.getPassword().toString();
+			
+			Makler m = new Makler();
+			m.setAddress(Adresse);
+			m.setLogin(Login);
+			m.setName(Name);
+			m.setPassword(Passwort);
+			int index = _liste.getSelectedIndex();
+			String old_values = _listModel.getElementAt(index);
+			
+			String[] split = old_values.split("-");
+			String Login_old = split[2];
+		
+			
+			db.Save_existing_Makler(m,Login_old);
+		
+			this.UpdateUI();
+		}
+		
+		
 		if (source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
 			System.out.println(index);
@@ -258,12 +285,12 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 				String Name 		= m.getName();
 				String Adresse 		= m.getAddress();
 				String Loginname 	= m.getLogin();
-				String Passwort     = m.getPassword();
+				String Passwort     = m.getPassword().toString();
 			
 				_name_ed.setText(Name);
 				_adresse_ed.setText(Adresse);
 				_login_ed.setText(Loginname);
-				_login_ed.setText(Passwort);
+				_password_ed.setText(Passwort);
 			}
 		
 		}
