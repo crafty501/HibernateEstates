@@ -20,11 +20,11 @@ public class EstatesPresenter {
 
 	public boolean logIn(String login) {
 		// TODO Auto-generated method stub
-		Makler makler = data.Gib_Makler(login);
+		Makler makler;// = data.Gib_Makler(login);
 		
 		//TODO loeschen
 		makler = new Makler();
-		makler.setLogin("text");
+		makler.setLogin("test");
 //		***************
 		boolean success = false;
 		if (makler!=null) {

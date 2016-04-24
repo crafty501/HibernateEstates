@@ -168,12 +168,34 @@ public class DB2 extends DB2ConnectionManager {
 		return true;
 	}
 
-	public boolean addApartment(Apartment apartment) {
-		// TODO Auto-generated method stub
-		return true;
+	private static final String ADD_APARTMENT = "INSERT INTO Apartment (ESTATE_ID, App_Floor, Rent, Rooms, Balcony, Built_in_Kitchen, person_id) VALUES(?,?,?,?,?,?,?)";
+	
+	public void addApartment(Apartment apartment) {
+		try {
+			int id = addEstate(apartment);
+
+			PreparedStatement ps = con.prepareStatement(ADD_APARTMENT);
+
+			ps.setInt(1, id);
+			ps.setInt(2, apartment.getFloor());
+			ps.setInt(3, apartment.getRent());
+			ps.setInt(4, apartment.getRooms());
+			ps.setInt(5, apartment.isBalcony() ? 1 : 0);
+			ps.setInt(6, apartment.isKitchen() ? 1 : 0);
+			ps.setInt(6, apartment.getPersonid());
+
+			ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public int createContract() {
+		return new Random(20000).nextInt();
+	}
+	
+	public int createPerson() {
 		return new Random(20000).nextInt();
 	}
 
@@ -184,14 +206,14 @@ public class DB2 extends DB2ConnectionManager {
 		try {
 			int id = addEstate(house);
 
-			PreparedStatement addHouse = con.prepareStatement(ADD_ESTATE);
+			PreparedStatement addHouse = con.prepareStatement(ADD_HOUSE);
 
 			addHouse.setInt(1, id);
 			addHouse.setInt(2, house.getFloors());
 			addHouse.setInt(3, house.getPrice());
 			addHouse.setInt(4, house.isGarden() ? 1 : 0);
-			addHouse.setInt(3, house.getPersonid());
-			addHouse.setInt(3, house.getContractnr());
+			addHouse.setInt(5, house.getPersonid());
+			addHouse.setInt(6, house.getContractnr());
 			
 			addHouse.executeQuery();
 		} catch (SQLException e) {
@@ -200,13 +222,13 @@ public class DB2 extends DB2ConnectionManager {
 		}
 	}
 
-	private static final String ADD_APARTMENT = "INSERT Apartment Estate (ID,City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	private static final String ADD_ESTATE = "INSERT INTO Estate (City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String ADD_ESTATE = "INSERT INTO Estate (City,Postal_Code,Street,Street_Number,Square_Area,Login,person_id,Contract_No) VALUES(?,?,?,?,?,?,?,?)";
 
 	private int addEstate(Estate estate) throws SQLException {
 
-		estate.setContractnr(createContract());
+		//estate.setPersonid(createPerson());
+		//estate.setContractnr(createContract());
 		PreparedStatement addEstate = con.prepareStatement(ADD_ESTATE);
 
 		addEstate.setString(1,estate.getCity());
@@ -215,8 +237,8 @@ public class DB2 extends DB2ConnectionManager {
 		addEstate.setString(4,estate.getStreetNr());
 		addEstate.setInt(5,estate.getSuareArea());
 		addEstate.setString(6,estate.getLogin());
-		addEstate.setInt(6,estate.getPersonid());
-		addEstate.setInt(6,estate.getContractnr());
+		addEstate.setInt(7,estate.getPersonid());
+		addEstate.setInt(8,estate.getContractnr());
 		
 		addEstate.executeUpdate();
 		

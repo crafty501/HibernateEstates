@@ -21,6 +21,8 @@ public abstract class EstatePanel extends JPanel{
 	private final JTextField tfStreetNr;
 	private final JTextField tfsquareArea;
 	private final JTextField tfPersonId;
+	private final JTextField tfContractNr;
+
 	
 	private final JLabel lbCity;
 	private final JLabel lbPostalCode;
@@ -28,7 +30,8 @@ public abstract class EstatePanel extends JPanel{
 	private final JLabel lbStreetNr;
 	private final JLabel lbSquareArea;
 	private final JLabel lbPersonId;
-	
+	private final JLabel lbContractNr;
+
 	
 	
 	public EstatePanel() {
@@ -38,13 +41,15 @@ public abstract class EstatePanel extends JPanel{
 		tfStreet = new JTextField();
 		tfStreetNr = new JTextField();
 		tfPersonId = new JTextField();
+		tfContractNr = new JTextField();
 		lbCity = new JLabel("city");
 		lbPostalCode = new JLabel("code");
 		lbSquareArea = new JLabel("qm");
-		lbStreet = new JLabel("streen");
+		lbStreet = new JLabel("street");
 		lbStreetNr = new JLabel("streetnr");
 		lbPersonId = new JLabel("personid");
-		
+		lbContractNr = new JLabel("ContractNr");
+
 		
 		setLayout(new GridLayout(0, 2));
 		add(lbCity);
@@ -59,6 +64,8 @@ public abstract class EstatePanel extends JPanel{
 		add(tfsquareArea);
 		add(lbPersonId);
 		add(tfPersonId);
+		add(lbContractNr);
+		add(tfContractNr);
 	}
 	
 	
@@ -69,12 +76,15 @@ public abstract class EstatePanel extends JPanel{
 		tfStreet = new JTextField();
 		tfStreetNr = new JTextField();
 		tfPersonId = new JTextField();
+		tfContractNr = new JTextField();
 		lbCity = new JLabel("city");
 		lbPostalCode = new JLabel("code");
 		lbSquareArea = new JLabel("qm");
-		lbStreet = new JLabel("streen");
+		lbStreet = new JLabel("street");
 		lbStreetNr = new JLabel("streetnr");
 		lbPersonId = new JLabel("personid");
+		lbContractNr = new JLabel("ContractNr");
+
 		
 		setLayout(new GridLayout(0, 2));
 		add(lbCity);
@@ -89,6 +99,8 @@ public abstract class EstatePanel extends JPanel{
 		add(tfsquareArea);
 		add(lbPersonId);
 		add(tfPersonId);
+		add(lbContractNr);
+		add(tfContractNr);
 		
 		tfCity.setText(estate.getCity());
 		tfPostalCode.setText(estate.getPostalCode());
@@ -96,6 +108,7 @@ public abstract class EstatePanel extends JPanel{
 		tfStreet.setText(estate.getStreet());
 		tfStreetNr.setText(estate.getStreetNr());
 		tfPersonId.setText(String.valueOf(estate.getPersonid()));
+		tfContractNr.setText(String.valueOf(estate.getContractnr()));
 
 	}
 	
@@ -127,6 +140,7 @@ public abstract class EstatePanel extends JPanel{
 		tfStreet.setEditable(b);
 		tfStreetNr.setEditable(b);
 		tfPersonId.setEditable(b);
+		tfContractNr.setEditable(b);
 	}
 	
 

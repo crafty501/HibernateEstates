@@ -22,7 +22,7 @@ public class main_ui extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JButton _estate_agents,_estates,_contracts,_exit;
 	private manager_ui _manager_ui;
-	private EstatesFrame login;
+	private EstatesFrame estates;
 	
 	private JPanel ButtonLeiste(){
 		
@@ -35,18 +35,18 @@ public class main_ui extends JFrame implements ActionListener{
 		
 		
 		 _estate_agents = new JButton();
-		 _estate_agents.setText("Manage Estate Agents");
+		 _estate_agents.setText("Estate Agents");
 		 _estate_agents.addActionListener(this);
 		main.add(_estate_agents);
 		
 		_estates = new JButton();
-		 _estates.setText("Login to Manage Estates");
+		 _estates.setText("Estates");
 		 _estates.addActionListener(this);
 		main.add(_estates);
 		
 		
 		_contracts = new JButton();
-		_contracts.setText("Login to Manage Estates");
+		_contracts.setText("Persons and pontracts");
 		_contracts.addActionListener(this);
 		main.add(_contracts);
 		
@@ -67,8 +67,8 @@ public class main_ui extends JFrame implements ActionListener{
 		
 		DB2 db = new DB2();
 		
-		login = new EstatesFrame();
-		login.setPresenter(new EstatesPresenter(login,db));
+		estates = new EstatesFrame();
+		estates.setPresenter(new EstatesPresenter(estates,db));
 		
 		this.setLayout(new BorderLayout());
 		JPanel menue = this.ButtonLeiste();
@@ -102,7 +102,7 @@ public class main_ui extends JFrame implements ActionListener{
 		}
 		
 		if(source.equals(_estates)){
-				login.setVisible(true);
+				estates.setVisible(true);
 		}
 		
 		if(source.equals(_exit)){
