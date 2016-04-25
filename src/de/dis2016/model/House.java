@@ -9,7 +9,7 @@ public class House extends Estate{
 	
 	
 	
-	public House(String id, String city, String postalCode, String street, String streetNr, int squareArea,
+	public House(int id, String city, String postalCode, String street, String streetNr, int squareArea,
 			int floors, int price, boolean garden, String login, int personid, int contractnr) {
 		super(id, city, postalCode, street, streetNr, squareArea, login, personid, contractnr);
 		this.floors = floors;

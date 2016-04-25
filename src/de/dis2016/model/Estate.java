@@ -2,7 +2,7 @@ package de.dis2016.model;
 
 
 public abstract class Estate {
-	private String id;
+	private int id;
 	private String city;
 	private String postalCode;
 	private String street;
@@ -14,7 +14,7 @@ public abstract class Estate {
 	
 	
 	
-	public Estate(String id, String city, String postalCode, String street, String streetNr, int squareArea, String login, int personid, int contractnr) {
+	public Estate(int id, String city, String postalCode, String street, String streetNr, int squareArea, String login, int personid, int contractnr) {
 		this.id = id;
 		this.city = city;
 		this.postalCode = postalCode;
@@ -25,10 +25,10 @@ public abstract class Estate {
 		this. personid = personid;
 		this.contractnr = contractnr;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getCity() {

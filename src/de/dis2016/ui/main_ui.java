@@ -46,7 +46,7 @@ public class main_ui extends JFrame implements ActionListener{
 		
 		
 		_contracts = new JButton();
-		_contracts.setText("Persons and pontracts");
+		_contracts.setText("Persons and contracts");
 		_contracts.addActionListener(this);
 		main.add(_contracts);
 		
