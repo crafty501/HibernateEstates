@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import de.dis2011.data.DB2;
 import de.dis2016.presenter.EstatesPresenter;
+import de.dis2016.presenter.ContractsPresenter;
 
 public class main_ui extends JFrame implements ActionListener{
 
@@ -23,6 +24,7 @@ public class main_ui extends JFrame implements ActionListener{
 	private JButton _estate_agents,_estates,_contracts,_exit;
 	private manager_ui _manager_ui;
 	private EstatesFrame estates;
+	private ContractsFrame contracts;
 	
 	private JPanel ButtonLeiste(){
 		
@@ -70,6 +72,9 @@ public class main_ui extends JFrame implements ActionListener{
 		estates = new EstatesFrame();
 		estates.setPresenter(new EstatesPresenter(estates,db));
 		
+		contracts = new ContractsFrame();
+		contracts.setPresenter(new ContractsPresenter(contracts,db));
+		
 		this.setLayout(new BorderLayout());
 		JPanel menue = this.ButtonLeiste();
 	
@@ -103,6 +108,10 @@ public class main_ui extends JFrame implements ActionListener{
 		
 		if(source.equals(_estates)){
 				estates.setVisible(true);
+		}
+		
+		if(source.equals(_contracts)){
+			contracts.setVisible(true);
 		}
 		
 		if(source.equals(_exit)){
