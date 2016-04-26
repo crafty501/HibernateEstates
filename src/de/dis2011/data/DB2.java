@@ -394,4 +394,5 @@ public class DB2 extends DB2ConnectionManager {
 
 		ps.executeUpdate();
 	}
+
 }

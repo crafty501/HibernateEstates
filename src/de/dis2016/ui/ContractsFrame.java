@@ -26,10 +26,15 @@ public class ContractsFrame extends JFrame{
 	private ContractsPresenter presenter;
 	
 	private JButton newPersonButton;
-	private JButton newContractButton;
-	private JButton allContractButton;
+	private JButton ContractButton;
 	
-	private JTable contracts = new JTable();
+	private JButton okButton;
+	private JButton exitButton;
+	
+//	private JTable contracts = new JTable();
+	
+	private JPanel contractPanel = new ContractsPanel();
+	
 	
 	public ContractsFrame(){
 	super();
@@ -52,56 +57,50 @@ public class ContractsFrame extends JFrame{
 			this.setLocation(x, y);
 			
 		newPersonButton = new JButton("New person");
-		newContractButton = new JButton("New contract");
-		allContractButton = new JButton("Show all contracts");
+		ContractButton = new JButton("Contracts");
+		okButton = new JButton("OK");
+		exitButton = new JButton("Exit");
+		
 		
 		JPanel pnlButtons = new JPanel();
 		pnlButtons.setLayout(new FlowLayout());
 		pnlButtons.add(newPersonButton);
-		pnlButtons.add(newContractButton);
-		pnlButtons.add(allContractButton);
+		pnlButtons.add(ContractButton);
+		
+		JPanel pnl2Buttons = new JPanel();
+		pnl2Buttons.setLayout(new FlowLayout());
+		pnl2Buttons.add(okButton);
+		pnl2Buttons.add(exitButton);
 		
 		this.add(pnlButtons, BorderLayout.NORTH);
+		this.add(pnl2Buttons, BorderLayout.SOUTH);
 		
-		this.add(new JScrollPane(contracts), BorderLayout.CENTER);
+		//this.add(new JScrollPane(contracts), BorderLayout.CENTER);
+		this.add(contractPanel, BorderLayout.CENTER);
 
-		//newPersonButton.setEnabled(false);
-		//newContractButton.setEnabled(false);
-		//allContractButton.setEnabled(false);
-		
-		contracts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		contracts.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (e.getValueIsAdjusting()) {
-					return;
-				}
-				System.out.println(contracts.getSelectedRow());
-			}
-		});
 		newPersonButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new LoginFrame(presenter);
+				contractPanel.setVisible(false);
 			}
 		});
-		newContractButton.addActionListener(new ActionListener() {
+		ContractButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new LoginFrame(presenter);
+				contractPanel.setVisible(true);
 			}
 		});
-		allContractButton.addActionListener(new ActionListener() {
-
-			@Override
+	
+		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//new LoginFrame(presenter);
 			}
 		});
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});	
 		
 	}
 	public void setPresenter(ContractsPresenter pres) {
