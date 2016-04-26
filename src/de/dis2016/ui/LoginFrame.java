@@ -106,7 +106,7 @@ public class LoginFrame extends JFrame {
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-		this.setSize(300, 400);
+		this.setSize(300, 180);
 		// Determine the new location of the window
 		int w = this.getSize().width;
 		int h = this.getSize().height;
