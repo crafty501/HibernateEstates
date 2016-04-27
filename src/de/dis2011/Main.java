@@ -12,6 +12,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		// showMainMenu();
+		
+		
 		main_ui main_ui = new main_ui();
 		main_ui.setSize(230, 200);
 		main_ui.setVisible(true);

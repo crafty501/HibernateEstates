@@ -167,6 +167,13 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	public manager_ui(){
 		super();
 		
+		//Hard coded Passwort 
+		
+		
+		
+		
+		
+		
 		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
 		DB2 db = new DB2();
 		this._makler_list = db.Gib_alle_Markler();
