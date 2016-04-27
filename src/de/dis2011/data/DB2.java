@@ -394,5 +394,108 @@ public class DB2 extends DB2ConnectionManager {
 
 		ps.executeUpdate();
 	}
+	/**************************
+	//Person
+	**************************/
+	public void Save_new_Person(Person m) {
 
+		String firstName = m.getFirstName();
+		String name = m.getName();
+		String adress = m.getAdress();
+
+		String Anfrage = "INSERT INTO Person " + "(First_Name,Name,Adress) " + "VALUES" + "('" + firstName + "','"
+				+ name + "','" + adress + "')";
+		try {
+			this.SendQuery(Anfrage, false);
+			System.out.println(Anfrage);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Die Anfrage konnte nicht verarbeitet werden!" + e.getMessage());
+		}
+	}
+	
+	public void Save_existing_Person(Person m, int id) {
+		String firstName = m.getFirstName();
+		String name = m.getName();
+		String adress = m.getAdress();
+
+		String Anfrage = "UPDATE Person SET First_Name='" + firstName + "',Name='" + name + "',Adress='" + adress + "' WHERE ID='" + id + "'";
+		System.out.println(Anfrage);
+		try {
+			this.SendQuery(Anfrage, false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Person> Gib_alle_Person() {
+
+		String Anfrage = "SELECT ID,First_Name,Name,Adress FROM Person";
+
+		try {
+			ResultSet s = this.SendQuery(Anfrage, true);
+			System.out.println(Anfrage);
+			ArrayList liste = new ArrayList<Person>();
+
+			// System.out.println("ResultSet row count = " + s.getRow());
+
+			while (s.next()) {
+				
+				int id = s.getInt("ID");
+				String firstName = s.getString("First_Name");
+				String name = s.getString("Name");
+				String adress = s.getString("Adress");
+				System.out.println(id + " " + firstName + " " + name + " " + adress);
+
+				Person m = new Person();
+				m.setID(id);
+				m.setFirstName(firstName);
+				m.setName(name);
+				m.setAdress(adress);
+				
+				liste.add(m);
+
+			}
+
+			return liste;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	public Person Gib_Person(int id) {
+
+		String Anfrage = "SELECT * FROM Person WHERE ID='" + id + "'";
+		System.out.println(Anfrage);
+		try {
+			ResultSet result = this.SendQuery(Anfrage, true);
+			int size = 0;
+			if (result == null) {
+				return null;
+			} else {
+				size = result.getFetchSize();
+				System.out.println("size=" + size);
+				if (result.next()) {
+					int id_id = result.getInt(1);
+					String firstName = result.getString(2);
+					String name = result.getString(2);
+					String adress = result.getString(3);
+					
+					Person m = new Person();
+					m.setFirstName(firstName);
+					m.setName(name);
+					m.setAdress(adress);
+
+					return m;
+				} else {
+					return null;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 }
