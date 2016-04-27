@@ -35,7 +35,7 @@ public class DB2 extends DB2ConnectionManager {
 	 * @return
 	 * @throws SQLException
 	 */
-	private ResultSet SendQuery(String S, boolean result) throws SQLException {
+	public ResultSet SendQuery(String S, boolean result) throws SQLException {
 
 		try {
 
@@ -57,6 +57,26 @@ public class DB2 extends DB2ConnectionManager {
 			throw e;
 
 		}
+	}
+	
+	public int Sendinsert(String Anfrage) throws SQLException {
+
+		try {
+
+			Statement stm = this.con.createStatement();
+			
+			stm.executeUpdate(Anfrage);
+		
+			
+			ResultSet rs = stm.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw e;
+
+		}
+		return -1;
 	}
 
 	public void Save_new_Makler(Makler m) {
@@ -252,9 +272,13 @@ public class DB2 extends DB2ConnectionManager {
 
 	public void deleteEstate(Estate estate) {
 		try {
+			
+			
+			//System.out.println("Estate_id: "+estate.getId());
 			PreparedStatement ps = con.prepareStatement(DELETE_ESTATE);
 			ps.setInt(1, estate.getId());
 
+			ps.execute();
 			// house und paparment werden cascadiert gelöscht
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -276,7 +300,18 @@ public class DB2 extends DB2ConnectionManager {
 			ps.setInt(4, apartment.getRooms());
 			ps.setInt(5, apartment.isBalcony() ? 1 : 0);
 			ps.setInt(6, apartment.isKitchen() ? 1 : 0);
-			ps.setInt(6, apartment.getPersonid());
+			ps.setInt(7, apartment.getPersonid());
+			
+			System.out.println(apartment.getFloor());
+			System.out.println(apartment.getCity());
+			System.out.println(apartment.getContractnr());
+			System.out.println(apartment.getLogin());
+			System.out.println(apartment.getPersonid());
+			System.out.println(apartment.getPostalCode());
+			System.out.println(apartment.getRent());
+			System.out.println(apartment.getRooms());
+			System.out.println(apartment.getStreet());
+			System.out.println(apartment.getSuareArea());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -285,7 +320,7 @@ public class DB2 extends DB2ConnectionManager {
 		}
 	}
 
-	private static final String ADD_HOUSE = "INSERT INTO House (ESTATE_ID,Floors,Price,Garden,person_id,purchase_contract) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String ADD_HOUSE = "INSERT INTO House (ESTATE_ID,Floors,Price,Garden,person_id,purchase_contract) VALUES(?,?,?,?,?,?)";
 
 	public void addHouse(House house) {
 
@@ -322,7 +357,7 @@ public class DB2 extends DB2ConnectionManager {
 		addEstate.setString(6, estate.getLogin());
 		addEstate.setInt(7, estate.getPersonid());
 		addEstate.setInt(8, estate.getContractnr());
-
+		//System.out.println(x);
 		addEstate.executeUpdate();
 
 		ResultSet rs = addEstate.getGeneratedKeys();
@@ -333,10 +368,12 @@ public class DB2 extends DB2ConnectionManager {
 	}
 
 	private static final String UPDATE_ESTATE = "UPDATE Estate SET City = ?,Postal_Code = ?,Street = ?,Street_Number = ?,Square_Area = ?,Login = ?,person_id = ?,Contract_No = ? WHERE ID = ?";
-	private static final String UPDATE_APARTMENT = "UPDATE Apartment Set ESTATE_ID = ?, App_Floor = ?, Rent = ?, Rooms = ?, Balcony = ?, Built_in_Kitchen = ?, person_id = ? WHERE ESTATE_ID = ?";
-	private static final String UPDATE_HOUSE = "UPDATE House SET ESTATE_ID = ?,Floors = ?,Price = ?,Garden = ?,person_id = ?,purchase_contract = ? WHERE ESTATE_ID = ?";
+	private static final String UPDATE_HOUSE = "UPDATE House SET Floors = ?,Price = ?,Garden = ?,person_id = ?,purchase_contract = ? WHERE ESTATE_ID = ?";
 
 	public void updateEstate(Estate estate) {
+		
+		//System.out.println(estate.getId());
+		
 		PreparedStatement addEstate;
 		try {
 			if (estate instanceof House) {
@@ -356,6 +393,11 @@ public class DB2 extends DB2ConnectionManager {
 			addEstate.setInt(8, estate.getContractnr());
 			addEstate.setInt(9, estate.getId());
 
+			
+			//String Anfrage ="UPDATE Estate SET City = '"+estate.getCity()+"' WHERE ID = '"+estate.getId()+"'";
+
+			//this.SendQuery(Anfrage, false);
+			
 			addEstate.executeUpdate();
 
 		} catch (SQLException e) {
@@ -380,6 +422,7 @@ public class DB2 extends DB2ConnectionManager {
 
 	}
 
+	private static final String UPDATE_APARTMENT = "UPDATE Apartment Set App_Floor = ?, Rent = ?, Rooms = ?, Balcony = ?, Built_in_Kitchen = ?, person_id = ? WHERE ESTATE_ID = ?";
 	private void updateApartment(Apartment estate) throws SQLException {
 
 		PreparedStatement ps = con.prepareStatement(UPDATE_APARTMENT);

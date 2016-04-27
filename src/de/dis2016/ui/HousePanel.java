@@ -5,6 +5,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import de.dis2016.model.Estate;
 import de.dis2016.model.House;
 
 public class HousePanel extends EstatePanel {
@@ -85,5 +86,7 @@ public class HousePanel extends EstatePanel {
 		tfPrice.setEditable(b);
 		cbxGarden.setEnabled(b);
 	}
+	
+	
 
 }

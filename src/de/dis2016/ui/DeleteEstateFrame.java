@@ -43,6 +43,8 @@ public class DeleteEstateFrame extends AbstractEstateFrame {
 				setVisible(false);
 				dispose();
 				
+			
+				
 				//boolean success = 
 				//if (success) {
 				//	setVisible(false);

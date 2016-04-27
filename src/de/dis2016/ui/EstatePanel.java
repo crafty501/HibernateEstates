@@ -15,13 +15,13 @@ public abstract class EstatePanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final JTextField tfCity;
-	private final JTextField tfPostalCode;
-	private final JTextField tfStreet;
-	private final JTextField tfStreetNr;
-	private final JTextField tfsquareArea;
-	private final JTextField tfPersonId;
-	private final JTextField tfContractNr;
+	public final JTextField tfCity;
+	public final JTextField tfPostalCode;
+	public final JTextField tfStreet;
+	public final JTextField tfStreetNr;
+	public final JTextField tfsquareArea;
+	public final JTextField tfPersonId;
+	public final JTextField tfContractNr;
 
 	
 	private final JLabel lbCity;
@@ -32,6 +32,7 @@ public abstract class EstatePanel extends JPanel{
 	private final JLabel lbPersonId;
 	private final JLabel lbContractNr;
 
+	protected Estate estate;
 	
 	
 	public EstatePanel() {
@@ -70,6 +71,9 @@ public abstract class EstatePanel extends JPanel{
 	
 	
 	public EstatePanel(Estate estate) {
+		
+		
+		
 		tfCity = new JTextField();
 		tfPostalCode = new JTextField();
 		tfsquareArea = new JTextField();
@@ -109,7 +113,8 @@ public abstract class EstatePanel extends JPanel{
 		tfStreetNr.setText(estate.getStreetNr());
 		tfPersonId.setText(String.valueOf(estate.getPersonid()));
 		tfContractNr.setText(String.valueOf(estate.getContractnr()));
-
+		
+		this.estate = estate;
 	}
 	
 	public String getCity() {
@@ -131,6 +136,15 @@ public abstract class EstatePanel extends JPanel{
 	public int getSuareArea() {
 		return Integer.parseInt(tfsquareArea.getText());
 	}
+	
+	public int getContractNr() {
+		return Integer.parseInt(tfContractNr.getText());
+	}
+	
+	
+	public int getPersonId() {
+		return Integer.parseInt(tfPersonId.getText());
+	}
 
 	
 	public void setEditable(boolean b) {
@@ -145,8 +159,16 @@ public abstract class EstatePanel extends JPanel{
 	
 
 
-	public int getPersonId() {
-		return Integer.parseInt(tfPersonId.getText());
+
+
+	public void updateEstate() {
+		estate.setCity(getCity());
+		estate.setContractnr(getContractNr());
+		estate.setPostalCode(getPostalCode());
+		estate.setStreet(getStreet());
+		estate.setStreetNr(getStreetNr());
+		estate.setSquareArea(getSuareArea());
+		estate.setPersonid(getPersonId());
 	}
 
 }

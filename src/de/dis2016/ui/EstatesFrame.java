@@ -118,7 +118,7 @@ public class EstatesFrame extends JFrame {
 				if (e.getValueIsAdjusting()) {
 					return;
 				}
-				System.out.println(estates.getSelectedRow());
+				//System.out.println(estates.getSelectedRow());
 			}
 		});
 
@@ -172,17 +172,17 @@ public class EstatesFrame extends JFrame {
 		deleteButton.setEnabled(true);
 		modifyButton.setEnabled(true);
 		
-		//list = new ArrayList<>();
-		//House house1 = new House(1, "testcity", "55733", "teststrasse", "43a", 4, 3, 5000, true, makler.getLogin(), 222222, 29382);
-		//House house2 = new House(2, "testcity2", "55733", "teststrasse", "43a", 24, 3, 5000, true, makler.getLogin(), 2393948, 3948);
-		//House house3 = new House(3, "testcity3", "55733", "teststrasse", "43a", 24, 3, 5000, true, makler.getLogin(), 44444, 39484);
-		//Apartment app1 = new Apartment(4, "asdfsd", "code", "street", "54", 3, 4, 10, 4, true, true, makler.getLogin(), 5555555, 338);
+		/*list = new ArrayList<>();
+		House house1 = new House(1, "testcity", "55733", "teststrasse", "43a", 4, 3, 5000, true, makler.getLogin(), 222222, 29382);
+		House house2 = new House(2, "testcity2", "55733", "teststrasse", "43a", 24, 3, 5000, true, makler.getLogin(), 2393948, 3948);
+		House house3 = new House(3, "testcity3", "55733", "teststrasse", "43a", 24, 3, 5000, true, makler.getLogin(), 44444, 39484);
+		Apartment app1 = new Apartment(4, "asdfsd", "code", "street", "54", 3, 4, 10, 4, true, true, makler.getLogin(), 5555555, 338);
 		
-		//list.add(house1);
-		//list.add(house2);
-		//list.add(house3);
-		//list.add(app1);
-		
+		list.add(house1);
+		list.add(house2);
+		list.add(house3);
+		list.add(app1);
+		*/
 		estates.setModel(new EstateTableModel(list));
 	}
 

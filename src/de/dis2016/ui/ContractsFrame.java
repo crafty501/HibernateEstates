@@ -40,8 +40,8 @@ public class ContractsFrame extends JFrame{
 	super();
 	
 	this.setLayout(new BorderLayout());
-	this.setSize(800, 600);
-	this.setMinimumSize(new Dimension(800, 600));
+	this.setSize(800, 800);
+	this.setMinimumSize(new Dimension(800, 800));
 	this.setResizable(true);
 	this.setTitle("Persons and contracts");
 	// Get the size of the screen
@@ -76,8 +76,8 @@ public class ContractsFrame extends JFrame{
 		this.add(pnl2Buttons, BorderLayout.SOUTH);
 		
 		//this.add(new JScrollPane(contracts), BorderLayout.CENTER);
-		this.add(contractPanel, BorderLayout.CENTER);
-		this.add(createPerson, BorderLayout.CENTER);
+		
+		
 		contractPanel.setVisible(false);
 		createPerson.setVisible(false);
 
@@ -85,6 +85,8 @@ public class ContractsFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				add(createPerson, BorderLayout.CENTER);
 				contractPanel.setVisible(false);
 				createPerson.setVisible(true);
 			}
@@ -93,6 +95,7 @@ public class ContractsFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				add(contractPanel, BorderLayout.CENTER);
 				contractPanel.setVisible(true);
 				createPerson.setVisible(false);
 			}

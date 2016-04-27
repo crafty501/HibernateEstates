@@ -1,6 +1,7 @@
 package de.dis2011.data;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,13 +38,14 @@ CREATE TABLE Purchase_Contract(
  */
 public class Contractsdb {
 	private int contractNo = -1;
-	//private int date;
+	private Date date;
 	private String place;
-	//private int startDate;
+	private Date startDate;
 	private int duration;
-	//private int additionalCosts;
+	private int additionalCosts;
 	private int noOfInstallments;
 	private int interestRate;
+	private boolean _tenancy;
 	
 	public int getContractNo() {
 		return contractNo;
@@ -52,15 +54,15 @@ public class Contractsdb {
 	public void setContractNo(int contractNo) {
 		this.contractNo = contractNo;
 	}
-	/*
-	public int getDate() {
+	
+	public Date getDate() {
 		return date;
 	}
 	
-	public void setDate(int date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
-	*/
+	
 	public String getPlace() {
 		return place;
 	}
@@ -68,30 +70,40 @@ public class Contractsdb {
 	public void setPlace(String place) {
 		this.place = place;
 	}
-	/*
-	public int getStartDate() {
+	
+	public void setTenency(boolean set){
+		this._tenancy = set;
+	}
+	
+	
+	
+	public Date getStartDate() {
 		return startDate;
 	}
 	
-	public void setStartDate(int startDate) {
-		this.startDate = startDate;
+	public void setStartDate(Date date2) {
+		this.startDate = date2;
 	}
-	*/
+	
 	public int getDuration() {
 		return duration;
+	}
+	
+	public boolean getTenency(){
+		return this._tenancy;
 	}
 	
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	/*
+	
 	public int getAdditionalCosts() {
 		return additionalCosts;
 	}
 	
 	public void setAdditionalCosts(int additionalCosts) {
 		this.additionalCosts = additionalCosts;
-	}*/
+	}
 	public int getNoOfInstallments() {
 		return noOfInstallments;
 	}
@@ -145,6 +157,38 @@ public class Contractsdb {
 		return null;
 	}
 	
+	
+	public void  Save_as_New(){
+		
+		
+		String ContractDate 	= date.toString();
+		String Place 			= getPlace();
+		String Anfrage = "INSERT INTO Tenancy_Contract (Contract_Date,Place) VALUES ('"+ContractDate+"','"+Place+"')";
+		System.out.println(Anfrage);
+		
+		DB2 db = new DB2();
+		int ID = -1;
+		try {
+			ID = db.Sendinsert(Anfrage);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(_tenancy){
+			
+			String StartDate 		= startDate.toString();
+			String Duration 		= String.valueOf(duration);
+			String Additional_Cost	= String.valueOf(additionalCosts);
+			Anfrage = "INSERT INTO Tenancy_Contract (Contract_No,Start_Date,Duration,Additional_Cost) VALUES ('"+ID+"','"+StartDate+"','"+Duration+"','"+Additional_Cost+"')";
+			System.out.println(Anfrage);
+		}else{
+			
+			
+		}
+		
+	}
+	
+	
 	/**
 	 * Speichert den Makler in der Datenbank. Ist noch keine ID vergeben
 	 * worden, wird die generierte Id von DB2 geholt und dem Model übergeben.
@@ -158,8 +202,13 @@ public class Contractsdb {
 			if (getContractNo() == -1) {
 				// Achtung, hier wird noch ein Parameter mitgegeben,
 				// damit spC$ter generierte IDs zurC<ckgeliefert werden!
+				
+				
+				
 				String insertSQL = "INSERT INTO Contract(Contract_Date, Place) VALUES (?, ?)";
 
+				
+				
 				PreparedStatement pstmt = con.prepareStatement(insertSQL,
 						Statement.RETURN_GENERATED_KEYS);
 

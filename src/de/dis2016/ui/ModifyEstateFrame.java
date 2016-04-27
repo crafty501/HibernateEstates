@@ -17,17 +17,22 @@ public class ModifyEstateFrame extends AbstractEstateFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private EstatePanel _panel;
 
 	public ModifyEstateFrame(final EstatesPresenter presenter, final Makler makler, final Estate estate) {
 		super();
 
-		EstatePanel panel = new HousePanel();
+		_panel = new HousePanel();
 		if (estate instanceof House) {
-			panel = new HousePanel((House) estate);
+			_panel = new HousePanel((House) estate);
+			
+			
 		} else if (estate instanceof Apartment) {
-			panel = new ApartmentPanel((Apartment) estate);
+			_panel = new ApartmentPanel((Apartment) estate);
+			
+			
 		}
-		super.add(panel, BorderLayout.CENTER);
+		super.add(_panel, BorderLayout.CENTER);
 		
 		weiter.setText("Aktualisieren");
 		
@@ -36,7 +41,21 @@ public class ModifyEstateFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				presenter.updateEstate(estate);
+				Estate es = null;
+				//House house = new House(-1, panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), 0);
+
+				if(_panel instanceof HousePanel){
+					HousePanel panel = ((HousePanel)_panel);
+					
+					es = new House(estate.getId(), panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), 0);
+
+				} else if (_panel instanceof ApartmentPanel) {
+					ApartmentPanel panel = ((ApartmentPanel)_panel);
+					es = new Apartment(estate.getId(), panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(),panel.getFloor(),panel.getRent(),panel.getRooms(),panel.hasKitchen(),panel.hasBalcony(), makler.getLogin(), panel.getPersonId(), 0);
+				}
+				
+				
+				presenter.updateEstate(es);
 				setVisible(false);
 				dispose();
 				

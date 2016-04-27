@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -24,6 +28,7 @@ import javax.swing.JTextField;
 
 import de.dis2011.data.DB2;
 import de.dis2011.data.DB2ConnectionManager;
+import de.dis2016.model.Contract;
 import de.dis2011.data.Contractsdb;
 
 
@@ -73,6 +78,7 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
                         BorderFactory.createEmptyBorder(5,5,5,5)),
         main.getBorder()));
 		main.setSize(500,600);
+		//main.setLayout(new Bt());
 		main.setLayout(new GridLayout(9,1));
 		
 		JPanel box = new JPanel();
@@ -229,10 +235,11 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		JPanel Eingabe 	= this.Generate_Eingabefelder();
 		JPanel Leiste 	= this.ButtonLeiste();
 		JPanel Liste	= this.Generate_Liste();
+		
 		this.add(Eingabe,BorderLayout.CENTER);
 		this.add(Leiste,BorderLayout.SOUTH);
 		this.add(Liste,BorderLayout.EAST);
-		this.setSize(800, 400);
+		this.setSize(800, 500);
 		//this.setResizable(false);
 		//this.setTitle("Manage Estate Managers");
 		//Get the size of the screen
@@ -257,25 +264,58 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 			this.setVisible(false);
 		}
 		
+		//Neuen Contract anlegen 
 		if(source.equals(_neu)){
+			SimpleDateFormat format 		= new SimpleDateFormat("dd.mm.yyyy");
+			Date Date = null;
+			long timestamp = 0;
+			try {
+				timestamp = format.parse(tfDate.getText()).getTime();
+				Date 						= new Date(timestamp);
+			} catch (ParseException e) {
+				//TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-		/*	String Name 	= _name_ed.getText();
-			String Adresse 	= _adresse_ed.getText();
-			String Login	= _login_ed.getText();
+			String Place 			= tfPlace.getText();
+			Contractsdb c = new Contractsdb();
 			
-			char[] Password = _password_ed.getPassword();
-			String pass = new String(Password);
+			c.setTenency(cbTenancy.isSelected());
 			
-			Contractsdb m = new Contractsdb();
-			m.setLogin(Login);
-			m.setPassword(pass);
-			m.setName(Name);
-			m.setAddress(Adresse);
 			
-			DB2 db = new DB2();
-			db.Save_new_Contract(m);
-			this._contract_list.add(m);
-			this.UpdateUI();*/
+			if(cbTenancy.isSelected()){			
+				String start_date 		= tfStartDate.getText();
+				String duration			= tfDuration.getText();
+				String additional_costs = tfAdditionalCosts.getText();
+				
+				
+				
+				c.setDate(Date);
+				c.setPlace(Place);
+				c.setAdditionalCosts(Integer.parseInt(additional_costs));
+				c.setDuration(Integer.parseInt(duration));
+				try {
+					c.setStartDate(new Date(format.parse(start_date).getTime()));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}else{
+				String No_of_installments 	= tfNoOfInstallments.getText();
+				String intrest_rate			= tfIntrestRate.getText();	 
+				
+				
+				c.setDate(Date);
+				c.setPlace(Place);
+				c.setNoOfInstallments(Integer.parseInt(No_of_installments));
+				c.setInterestRate(Integer.parseInt(intrest_rate));
+				
+			}
+			c.Save_as_New();
+			
+			
 		}
 		
 		if(source.equals(_speichern)){
@@ -302,6 +342,8 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 			this.UpdateUI(); */
 		}
 		
+		
+	
 		
 		if (source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
