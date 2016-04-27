@@ -65,7 +65,7 @@ public class main_ui extends JFrame implements ActionListener{
 	public main_ui(){
 		super();
 	
-		this._manager_ui = new manager_ui();
+		
 		
 		DB2 db = new DB2();
 		
@@ -103,7 +103,14 @@ public class main_ui extends JFrame implements ActionListener{
 		
 		Object source = arg0.getSource();
 		if (source.equals(_estate_agents)){
-				_manager_ui.setVisible(true);
+			
+			
+				LoginFrame2 login = new LoginFrame2();
+				
+				login.setVisible(true);
+			
+			
+				
 		}
 		
 		if(source.equals(_estates)){

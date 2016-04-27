@@ -266,14 +266,19 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		
 		//Neuen Contract anlegen 
 		if(source.equals(_neu)){
-			SimpleDateFormat format 		= new SimpleDateFormat("dd.mm.yyyy");
+			
+			
+			
+			SimpleDateFormat format 		= new SimpleDateFormat("dd.MM.yyyy");
 			Date Date = null;
 			long timestamp = 0;
 			try {
 				timestamp = format.parse(tfDate.getText()).getTime();
 				Date 						= new Date(timestamp);
+			
+				System.out.println(Date.toString());
 			} catch (ParseException e) {
-				//TODO Auto-generated catch block
+				System.out.println("Kein richtiges Format");
 				e.printStackTrace();
 			}
 			

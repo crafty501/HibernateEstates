@@ -1,6 +1,7 @@
 
 package de.dis2011.data;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import de.dis2016.model.Apartment;
+import de.dis2016.model.Contract;
 import de.dis2016.model.Estate;
 import de.dis2016.model.House;
 
@@ -59,13 +61,20 @@ public class DB2 extends DB2ConnectionManager {
 		}
 	}
 	
-	public int Sendinsert(String Anfrage) throws SQLException {
+	
+	private static final String INSERT_CONTRACT = "INSERT INTO Contract (Contract_Date,Place) VALUES (?,?)";
+
+	
+	public int Insert_Contract(Date date, String Place) throws SQLException {
 
 		try {
 
-			Statement stm = this.con.createStatement();
+			PreparedStatement stm = this.con.prepareStatement(INSERT_CONTRACT,Statement.RETURN_GENERATED_KEYS);
 			
-			stm.executeUpdate(Anfrage);
+			stm.setDate(1, date);
+			stm.setString(2, Place);
+			
+			stm.execute();
 		
 			
 			ResultSet rs = stm.getGeneratedKeys();
@@ -522,8 +531,8 @@ public class DB2 extends DB2ConnectionManager {
 				if (result.next()) {
 					int id_id = result.getInt(1);
 					String firstName = result.getString(2);
-					String name = result.getString(2);
-					String adress = result.getString(3);
+					String name = result.getString(3);
+					String adress = result.getString(4);
 					
 					Person m = new Person();
 					m.setFirstName(firstName);

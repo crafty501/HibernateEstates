@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 import de.dis2011.data.DB2ConnectionManager;
+import de.dis2016.model.Contract;
 
 /**
  CREATE TABLE Contract(
@@ -39,6 +41,7 @@ CREATE TABLE Purchase_Contract(
 public class Contractsdb {
 	private int contractNo = -1;
 	private Date date;
+	private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 	private String place;
 	private Date startDate;
 	private int duration;
@@ -161,22 +164,25 @@ public class Contractsdb {
 	public void  Save_as_New(){
 		
 		
-		String ContractDate 	= date.toString();
+		String ContractDate 	= format.format(date);
 		String Place 			= getPlace();
-		String Anfrage = "INSERT INTO Tenancy_Contract (Contract_Date,Place) VALUES ('"+ContractDate+"','"+Place+"')";
+		String Anfrage = "INSERT INTO Contract (Contract_Date,Place) VALUES ('"+ContractDate+"','"+Place+"')";
 		System.out.println(Anfrage);
+		
+		
+		
 		
 		DB2 db = new DB2();
 		int ID = -1;
 		try {
-			ID = db.Sendinsert(Anfrage);
+			ID = db.Insert_Contract(date,Place);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(_tenancy){
 			
-			String StartDate 		= startDate.toString();
+			String StartDate 		= format.format(startDate);
 			String Duration 		= String.valueOf(duration);
 			String Additional_Cost	= String.valueOf(additionalCosts);
 			Anfrage = "INSERT INTO Tenancy_Contract (Contract_No,Start_Date,Duration,Additional_Cost) VALUES ('"+ID+"','"+StartDate+"','"+Duration+"','"+Additional_Cost+"')";

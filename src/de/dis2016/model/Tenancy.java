@@ -1,12 +1,14 @@
 package de.dis2016.model;
 
+import java.sql.Date;
+
 public class Tenancy extends Contract{
 	
 	private int startDate;
 	private int duration;
 	private int additionalCosts;
 	
-	public Tenancy(int contractno, int date, String place, int startDate, int duration, int additionalCosts){
+	public Tenancy(int contractno, Date date, String place, int startDate, int duration, int additionalCosts){
 		super(contractno, date, place);
 		this.startDate = startDate;
 		this.duration = duration;

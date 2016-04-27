@@ -1,11 +1,13 @@
 package de.dis2016.model;
 
+import java.sql.Date;
+
 public class Purchase extends Contract{
 	
 	private int noOfInstallments;
 	private int intrestRate;
 
-	public Purchase(int contractno, int date, String place, int noOfInstallments, int intrestRate){
+	public Purchase(int contractno, Date date, String place, int noOfInstallments, int intrestRate){
 		super(contractno, date, place);
 		this.noOfInstallments = noOfInstallments;
 		this.intrestRate = intrestRate;

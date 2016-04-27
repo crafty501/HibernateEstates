@@ -35,14 +35,15 @@ public class EstatesFrame extends JFrame {
 
 	private EstatesPresenter presenter;
 
-	String[] columnNames = { "id", "name", "street" };
-
+	String[] columnNames = { "ID", "City", "PostalCode" , "Street", "StreetNr." , "SquareArea" };
+	
+	Object[][] data =  { };
 	// final DefaultTableModel housesModel = new DefaultTableModel( columnNames,
 	// 0 );
 	// final DefaultTableModel apartmentsModel = new DefaultTableModel(
 	// columnNames, 0 );
 
-	private JTable estates = new JTable();
+	private JTable estates = new JTable(data,columnNames);
 
 	// private JTable houses = new JTable(housesModel);
 	// private JTable apartments = new JTable(apartmentsModel);
@@ -184,6 +185,10 @@ public class EstatesFrame extends JFrame {
 		list.add(app1);
 		*/
 		estates.setModel(new EstateTableModel(list));
+		for(int i =0; i < columnNames.length; i++){
+			estates.getTableHeader().getColumnModel().getColumn(i).setHeaderValue(columnNames[i]);
+		}
+		
 	}
 
 	public void setPresenter(EstatesPresenter pres) {

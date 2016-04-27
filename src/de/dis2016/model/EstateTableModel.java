@@ -11,6 +11,8 @@ public class EstateTableModel extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+	
 	private List<Estate> estates;
 	
 	public EstateTableModel(List<Estate> estates) {
