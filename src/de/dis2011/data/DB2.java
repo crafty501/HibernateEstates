@@ -1,11 +1,13 @@
 
 package de.dis2011.data;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,9 +19,14 @@ import de.dis2016.model.Apartment;
 import de.dis2016.model.Contract;
 import de.dis2016.model.Estate;
 import de.dis2016.model.House;
+import de.dis2016.model.Purchase;
+import de.dis2016.model.Tenancy;
 
 public class DB2 extends DB2ConnectionManager {
 
+	
+	private SimpleDateFormat _format = new SimpleDateFormat("dd.MM.yyyy");
+	
 	public DB2() {
 		super();
 
@@ -63,7 +70,6 @@ public class DB2 extends DB2ConnectionManager {
 	
 	
 	private static final String INSERT_CONTRACT = "INSERT INTO Contract (Contract_Date,Place) VALUES (?,?)";
-
 	
 	public int Insert_Contract(Date date, String Place) throws SQLException {
 
@@ -87,6 +93,153 @@ public class DB2 extends DB2ConnectionManager {
 		}
 		return -1;
 	}
+	
+	
+/**
+ CREATE TABLE Tenancy_Contract(
+		ID					integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+        Contract_No         integer NOT NULL,
+        Start_Date          date NOT NULL,
+        Duration            integer NOT NULL, -- Zeit wird in Tagen angegeben
+        Additional_Costs    decimal(4,2),
+		PRIMARY KEY(ID)
+);
+ 
+
+CREATE TABLE Purchase_Contract(
+		ID					  integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+        Contract_No           integer NOT NULL,
+        No_of_Installments    integer NOT NULL,
+        Interest_Rate         integer NOT NULL,
+		PRIMARY KEY(ID)
+);
+Die Methode muss einmal einen Contract anlegen und danach in die jeweilige Tabelle 
+* @param contract
+*/
+public void  Save_as_New_Contract(Contract contract){
+		Date date 				= contract.getDate();
+		String ContractDate 	= _format.format(date);
+		String Place 			= contract.getPlace();
+	
+		int ID = -1;
+		try {
+			ID = Insert_Contract(date,Place);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assert ID != -1 : "In der Methode Save_as_New_Contract wurde eine ungültige ID zurückgegeben";
+		
+		if(contract instanceof Tenancy){
+		
+			Tenancy t = (Tenancy)contract;
+			
+			String StartDate 		= _format.format(t.getStartDate());
+			String Duration 		= String.valueOf(t.getDuration());
+			String Additional_Cost	= String.valueOf(t.getAdditionalCosts());
+			
+			
+			String Anfrage = "INSERT INTO Tenancy_Contract (Contract_No,Start_Date,Duration,Additional_Costs) VALUES ('"+ID+"','"+StartDate+"','"+Duration+"','"+Additional_Cost+"')";
+			System.out.println(Anfrage);
+			try {
+				this.SendQuery(Anfrage, false);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}else{
+			
+			Purchase p = (Purchase)contract;
+			
+			
+			String Contract_Number 		= String.valueOf(ID);//String.valueOf(p.getContractno());
+			String No_of_Installments 	= String.valueOf(p.getNoOfInstallments());
+			String Interest_Rate		= String.valueOf(p.getIntrestRate());
+			
+			String Anfrage = "INSERT INTO Purchase_Contract (Contract_No,No_of_Installments,Interest_Rate) VALUES('"+Contract_Number+"','"+No_of_Installments+"','"+Interest_Rate+"')";
+
+			
+			System.out.println(Anfrage);
+			try {
+				this.SendQuery(Anfrage, false);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+
+
+public List<Contract>  load_all_contracts(){
+	
+	
+	List<Contract> liste = new ArrayList<Contract>();
+	
+	String Anfrage = "SELECT Contract.Contract_No,Contract.Contract_Date,Contract.Place,Start_Date,Duration,Additional_Costs FROM Contract,Tenancy_Contract "
+			       + "WHERE Contract.Contract_No = Tenancy_Contract.Contract_No";
+	
+	System.out.println(Anfrage);
+	try {
+		ResultSet rs = this.SendQuery(Anfrage, true);
+		while(rs.next()){
+			
+			int contractNo 				= rs.getInt("Contract_No");
+			Date contractDate 			= rs.getDate("Contract_Date");
+			String place 				= rs.getString("Place");
+			Date startDate				= rs.getDate("Start_Date");
+			int duration 				= rs.getInt("Duration");
+			int additionalCosts 		= rs.getInt("Additional_Costs");
+			
+			Contract c = new Tenancy(contractNo, contractDate, place, startDate, duration, additionalCosts);
+			
+			
+			liste.add(c);
+			
+			
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	Anfrage = "SELECT Contract.Contract_No,Contract.Contract_Date,Contract.Place,No_of_Installments,Interest_Rate FROM Contract,Purchase_Contract "
+		       + "WHERE Contract.Contract_No = Purchase_Contract.Contract_No";
+
+System.out.println(Anfrage);
+try {
+	ResultSet rs = this.SendQuery(Anfrage, true);
+	while(rs.next()){
+		
+		int contractNo 				= rs.getInt("Contract_No");
+		Date contractDate 			= rs.getDate("Contract_Date");
+		String place 				= rs.getString("Place");
+		int noOfInstallments		= rs.getInt("No_of_Installments");
+		int interestRate 			= rs.getInt("Interest_Rate");
+		
+		Contract c = new Purchase(contractNo, contractDate, place, noOfInstallments, interestRate);
+		
+		
+		liste.add(c);
+		
+		
+	}
+	
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+	
+	
+	
+	
+	return liste;
+	
+	
+}
 
 	public void Save_new_Makler(Makler m) {
 

@@ -28,7 +28,6 @@ public class ContractsFrame extends JFrame{
 	private JButton newPersonButton;
 	private JButton ContractButton;
 	
-	private JButton okButton;
 	private JButton exitButton;
 	
 //	private JTable contracts = new JTable();
@@ -58,7 +57,6 @@ public class ContractsFrame extends JFrame{
 			
 		newPersonButton = new JButton("New person");
 		ContractButton = new JButton("Contracts");
-		okButton = new JButton("OK");
 		exitButton = new JButton("Exit");
 		
 		
@@ -69,7 +67,6 @@ public class ContractsFrame extends JFrame{
 		
 		JPanel pnl2Buttons = new JPanel();
 		pnl2Buttons.setLayout(new FlowLayout());
-		pnl2Buttons.add(okButton);
 		pnl2Buttons.add(exitButton);
 		
 		this.add(pnlButtons, BorderLayout.NORTH);
@@ -101,12 +98,11 @@ public class ContractsFrame extends JFrame{
 			}
 		});
 	
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
 			}
 		});	
 		

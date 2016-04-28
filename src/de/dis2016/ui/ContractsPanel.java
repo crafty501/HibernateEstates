@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -29,6 +30,8 @@ import javax.swing.JTextField;
 import de.dis2011.data.DB2;
 import de.dis2011.data.DB2ConnectionManager;
 import de.dis2016.model.Contract;
+import de.dis2016.model.Purchase;
+import de.dis2016.model.Tenancy;
 import de.dis2011.data.Contractsdb;
 
 
@@ -43,24 +46,27 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 	JCheckBox cbTenancy;
 	JTextField tfID, tfDate, tfPlace, tfStartDate, tfDuration, tfAdditionalCosts, tfNoOfInstallments, tfIntrestRate;
 	JList _liste;
-	ArrayList<Contractsdb> _contract_list;
+	List<Contract> _contract_list;
 	DefaultListModel<String> _listModel;
-	
+	SimpleDateFormat format 		= new SimpleDateFormat("dd.MM.yyyy");
 	
 	private void UpdateUI(){
 	_listModel.clear();
 	
+	DB2 db = new DB2();
+	_contract_list = db.load_all_contracts();
 	if(_contract_list.size() == 0){
-		
 		// Die MarklerListe ist noch komplett leer
+		
 		System.out.println("Contract ist noch komplett leer");
 		
 	}else{
-	//	DB2 db = new DB2();
-//		_contract_list = db.Gib_alle_Contracts();
+
 		for(int i = 0 ; i < _contract_list.size(); i++){
-	//		Contractsdb m = (Contractsdb) _contract_list.get(i);
-	//		_listModel.addElement(i + "-" + m.getPlace());
+			
+			Contract c = _contract_list.get(i);
+			int Contract_No = c.getContractno();
+			_listModel.addElement("[" +Contract_No+"]");
 		}
 		
 	}
@@ -191,12 +197,7 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		_neu 		= new JButton();
 		_neu.setText("Save as new");
 		_neu.addActionListener(this);
-		_speichern 	= new JButton();
-		_speichern.setText("Update");
-		_speichern.addActionListener(this);
-
 		main.add(_neu);
-		main.add(_speichern);
 		return main;
 	}
 	
@@ -240,19 +241,9 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		this.add(Leiste,BorderLayout.SOUTH);
 		this.add(Liste,BorderLayout.EAST);
 		this.setSize(800, 500);
-		//this.setResizable(false);
-		//this.setTitle("Manage Estate Managers");
-		//Get the size of the screen
-     //   Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        // Determine the nfalseew location of the window
-     //   int w = this.getSize().width;
-     //   int h = this.getSize().height;
-     //   int x = (dim.width-w)/2;
-     //   int y = (dim.height-h)/2;
-        // Move the window
-     //   this.setLocation(x, y);
+
         
-      //  this.UpdateUI();
+        this.UpdateUI();
 	}
 
 	@Override
@@ -269,7 +260,7 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 			
 			
 			
-			SimpleDateFormat format 		= new SimpleDateFormat("dd.MM.yyyy");
+			
 			Date Date = null;
 			long timestamp = 0;
 			try {
@@ -283,71 +274,36 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 			}
 			
 			String Place 			= tfPlace.getText();
-			Contractsdb c = new Contractsdb();
-			
-			c.setTenency(cbTenancy.isSelected());
 			
 			
-			if(cbTenancy.isSelected()){			
-				String start_date 		= tfStartDate.getText();
-				String duration			= tfDuration.getText();
-				String additional_costs = tfAdditionalCosts.getText();
+			Contract c = null; 
+			
+			if(cbTenancy.isSelected()){		
 				
-				
-				
-				c.setDate(Date);
-				c.setPlace(Place);
-				c.setAdditionalCosts(Integer.parseInt(additional_costs));
-				c.setDuration(Integer.parseInt(duration));
+				long time_stamp = 0L;
 				try {
-					c.setStartDate(new Date(format.parse(start_date).getTime()));
+					time_stamp = format.parse(tfStartDate.getText()).getTime();
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				Date start_date 		= new Date(time_stamp);
+				int duration			= Integer.parseInt(tfDuration.getText());
+				int additional_costs 	= Integer.parseInt(tfAdditionalCosts.getText());
 				
-				
+				c = new Tenancy(-1, Date, Place, start_date, duration, additional_costs);
 			}else{
-				String No_of_installments 	= tfNoOfInstallments.getText();
-				String intrest_rate			= tfIntrestRate.getText();	 
-				
-				
-				c.setDate(Date);
-				c.setPlace(Place);
-				c.setNoOfInstallments(Integer.parseInt(No_of_installments));
-				c.setInterestRate(Integer.parseInt(intrest_rate));
-				
+				int  No_of_installments 	= Integer.parseInt(tfNoOfInstallments.getText());
+				int  intrest_rate			= Integer.parseInt(tfIntrestRate.getText());	 
+				c = new Purchase(-1, Date, Place, No_of_installments, intrest_rate);
 			}
-			c.Save_as_New();
+			
+			assert c !=  null : "Contract Objekt ist null!";
+			DB2 db = new DB2();
+			db.Save_as_New_Contract(c);
 			
 			
+			this.UpdateUI();
 		}
-		
-		if(source.equals(_speichern)){
-/*			DB2 db = new DB2();
-			String Adresse 	= this._adresse_ed.getText();
-			String Name 	= this._name_ed.getText();
-			String Login	= this._login_ed.getText();
-			String Passwort = this._password_ed.getPassword().toString();
-			
-			Contractsdb m = new Contractsdb();
-			m.setAddress(Adresse);
-			m.setLogin(Login);
-			m.setName(Name);
-			m.setPassword(Passwort);
-			int index = _liste.getSelectedIndex();
-			String old_values = _listModel.getElementAt(index);
-			
-			String[] split = old_values.split("-");
-			String Login_old = split[2];
-		
-			
-			db.Save_existing_Contracts(m,Login_old);
-		
-			this.UpdateUI(); */
-		}
-		
-		
 	
 		
 		if (source.equals(_liste)){
@@ -363,36 +319,63 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 	public void mouseClicked(MouseEvent e) {
 		
 		
+		
+		
+		
+		
 		Object source = e.getSource();
 		if(source.equals(_liste)){
+			
+			//Alles leer
+			tfDate.setText("");
+			tfPlace.setText("");
+			tfStartDate.setText("");
+			tfDuration.setText("");
+			tfAdditionalCosts.setText("");
+			tfNoOfInstallments.setText("");
+			tfIntrestRate.setText("");
+			
 			int index = _liste.getSelectedIndex();
 			
 			DB2 db = new DB2();
 			
 			System.out.println(index);
 			
-			/*
-			if( index != -1 ){ // Die Gui ist dann noch leer
+			Contract c = _contract_list.get(index);
+			
+			tfDate.setText(format.format(c.getDate()));
+			tfPlace.setText(c.getPlace());
+			
+			
+			
+			
+			if (c instanceof Tenancy) {
+			
+				tfStartDate.setEditable(true);
+				tfDuration.setEditable(true);
+				tfAdditionalCosts.setEditable(true);
+				tfNoOfInstallments.setEditable(false);
+				tfIntrestRate.setEditable(false);
 				
-				String ListElement = (String) _listModel.getElementAt(index);
-				String[] split = ListElement.split("-");
-				String Login = split[2];
-			
-				Contractdb m = db.Gib_Makler(Login);
-		
-				assert m != null : "Der Makler konnte nicht aus der Datenbank gelesen werden.";
-			
-				String Name 		= m.getName();
-				String Adresse 		= m.getAddress();
-				String Loginname 	= m.getLogin();
-				String Passwort     = m.getPassword().toString();
-			
-				_name_ed.setText(Name);
-				_adresse_ed.setText(Adresse);
-				_login_ed.setText(Loginname);
-				_password_ed.setText(Passwort);
+				cbTenancy.setSelected(true);
+				Tenancy t = (Tenancy)c;
+				tfStartDate.setText(format.format(t.getStartDate()));
+				tfDuration.setText(String.valueOf(t.getDuration()));
+				tfAdditionalCosts.setText(String.valueOf(t.getAdditionalCosts()));
+				
+			}else{
+				
+				tfStartDate.setEditable(false);
+				tfDuration.setEditable(false);
+				tfAdditionalCosts.setEditable(false);
+				tfNoOfInstallments.setEditable(true);
+				tfIntrestRate.setEditable(true);
+				
+				cbTenancy.setSelected(false);
+				Purchase p = (Purchase)c;
+				tfNoOfInstallments.setText(String.valueOf(p.getNoOfInstallments()));
+				tfIntrestRate.setText(String.valueOf(p.getIntrestRate()));
 			}
-		*/
 		}
 		
 		
@@ -424,103 +407,3 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 }
 
 
-/*
-public class ContractsPanel extends JPanel{
-	private static final long serialVersionUID = 1L;
-	
-	private final JCheckBox cbTenancy;
-	private final JTextField tfID;
-	private final JTextField tfDate;
-	private final JTextField tfPlace;
-	private final JTextField tfStartDate;
-	private final JTextField tfDuration;
-	private final JTextField tfAdditionalCosts;
-	private final JTextField tfNoOfInstallments;
-	private final JTextField tfIntrestRate;
-	
-	private final JLabel lbTenancy;
-	private final JLabel lbID;
-	private final JLabel lbDate;
-	private final JLabel lbPlace;
-	private final JLabel lbStartDate;
-	private final JLabel lbDuration;
-	private final JLabel lbAdditionalCosts;
-	private final JLabel lbNoOfInstallments;
-	private final JLabel lbIntrestRate;
-	
-
-	
-	
-	
-	
-	public ContractsPanel(){
-		cbTenancy = new JCheckBox();
-		tfID = new JTextField();
-		tfDate = new JTextField();
-		tfPlace = new JTextField();
-		tfStartDate = new JTextField();
-		tfDuration = new JTextField();
-		tfAdditionalCosts = new JTextField();
-		tfNoOfInstallments = new JTextField();
-		tfIntrestRate = new JTextField();
-		
-		lbTenancy = new JLabel("Tenancy");
-		lbID = new JLabel("ID");
-		lbDate = new JLabel("Date");
-		lbPlace = new JLabel("Place");
-		lbStartDate = new JLabel("Start Date");
-		lbDuration = new JLabel("Duration");
-		lbAdditionalCosts = new JLabel("Additional Costs");
-		lbNoOfInstallments = new JLabel("No of Installments");
-		lbIntrestRate = new JLabel("Intrest Rate");
-		
-		tfNoOfInstallments.setEditable(true);
-		tfIntrestRate.setEditable(true);
-		tfStartDate.setEditable(false);
-		tfDuration.setEditable(false);
-		tfAdditionalCosts.setEditable(false);
-		
-		
-		
-		setLayout(new GridLayout(0, 2));
-		add(lbTenancy);
-		add(cbTenancy);
-		add(lbID);
-		add(tfID);
-		add(lbDate);
-		add(tfDate);
-		add(lbPlace);
-		add(tfPlace);
-		add(lbStartDate);
-		add(tfStartDate);
-		add(lbDuration);
-		add(tfDuration);
-		add(lbAdditionalCosts);
-		add(tfAdditionalCosts);
-		add(lbNoOfInstallments);
-		add(tfNoOfInstallments);
-		add(lbIntrestRate);
-		add(tfIntrestRate);
-		
-		cbTenancy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (cbTenancy.isSelected()) {
-					tfNoOfInstallments.setEditable(false);
-					tfIntrestRate.setEditable(false);
-					tfStartDate.setEditable(true);
-					tfDuration.setEditable(true);
-					tfAdditionalCosts.setEditable(true);
-				}else{
-					tfNoOfInstallments.setEditable(true);
-					tfIntrestRate.setEditable(true);
-					tfStartDate.setEditable(false);
-					tfDuration.setEditable(false);
-					tfAdditionalCosts.setEditable(false);
-				}
-		    }
-		});		
-		
-	}	
-
-}
-*/

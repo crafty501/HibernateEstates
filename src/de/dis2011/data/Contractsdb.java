@@ -41,7 +41,7 @@ CREATE TABLE Purchase_Contract(
 public class Contractsdb {
 	private int contractNo = -1;
 	private Date date;
-	private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+	
 	private String place;
 	private Date startDate;
 	private int duration;
@@ -160,93 +160,5 @@ public class Contractsdb {
 		return null;
 	}
 	
-	
-	public void  Save_as_New(){
-		
-		
-		String ContractDate 	= format.format(date);
-		String Place 			= getPlace();
-		String Anfrage = "INSERT INTO Contract (Contract_Date,Place) VALUES ('"+ContractDate+"','"+Place+"')";
-		System.out.println(Anfrage);
-		
-		
-		
-		
-		DB2 db = new DB2();
-		int ID = -1;
-		try {
-			ID = db.Insert_Contract(date,Place);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(_tenancy){
-			
-			String StartDate 		= format.format(startDate);
-			String Duration 		= String.valueOf(duration);
-			String Additional_Cost	= String.valueOf(additionalCosts);
-			Anfrage = "INSERT INTO Tenancy_Contract (Contract_No,Start_Date,Duration,Additional_Cost) VALUES ('"+ID+"','"+StartDate+"','"+Duration+"','"+Additional_Cost+"')";
-			System.out.println(Anfrage);
-		}else{
-			
-			
-		}
-		
-	}
-	
-	
-	/**
-	 * Speichert den Makler in der Datenbank. Ist noch keine ID vergeben
-	 * worden, wird die generierte Id von DB2 geholt und dem Model übergeben.
-	 */
-	public void save() {
-		// Hole Verbindung
-		Connection con = DB2ConnectionManager.getInstance().getConnection();
-
-		try {
-			// FC<ge neues Element hinzu, wenn das Objekt noch keine ID hat.
-			if (getContractNo() == -1) {
-				// Achtung, hier wird noch ein Parameter mitgegeben,
-				// damit spC$ter generierte IDs zurC<ckgeliefert werden!
-				
-				
-				
-				String insertSQL = "INSERT INTO Contract(Contract_Date, Place) VALUES (?, ?)";
-
-				
-				
-				PreparedStatement pstmt = con.prepareStatement(insertSQL,
-						Statement.RETURN_GENERATED_KEYS);
-
-				// Setze Anfrageparameter und fC<hre Anfrage aus
-				//pstmt.setInt(1, getDate());
-				pstmt.setString(2, getPlace());
-				pstmt.executeUpdate();
-
-				// Hole die Id des engefC<gten Datensatzes
-				ResultSet rs = pstmt.getGeneratedKeys();
-				if (rs.next()) {
-					setContractNo(rs.getInt(1));
-				}
-
-				rs.close();
-				pstmt.close();
-			} else {
-				// Falls schon eine ID vorhanden ist, mache ein Update...
-				String updateSQL = "UPDATE Contract SET Contract_Date = ?, Place = ? WHERE Contract_No = ?";
-				PreparedStatement pstmt = con.prepareStatement(updateSQL);
-
-				// Setze Anfrage Parameter
-				//pstmt.setInt(1, getDate());
-				pstmt.setString(2, getPlace());
-				pstmt.setInt(5, getContractNo());
-				pstmt.executeUpdate();
-
-				pstmt.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
 }

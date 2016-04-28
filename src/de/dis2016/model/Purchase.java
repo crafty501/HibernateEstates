@@ -16,7 +16,7 @@ public class Purchase extends Contract{
 	public int getNoOfInstallments() {
 		return noOfInstallments;
 	}
-	public int getIntrestRate(int intrestRate) {
+	public int getIntrestRate() {
 		return intrestRate;
 	}
     

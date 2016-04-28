@@ -4,17 +4,17 @@ import java.sql.Date;
 
 public class Tenancy extends Contract{
 	
-	private int startDate;
+	private Date startDate;
 	private int duration;
 	private int additionalCosts;
 	
-	public Tenancy(int contractno, Date date, String place, int startDate, int duration, int additionalCosts){
+	public Tenancy(int contractno, Date date, String place, Date startDate, int duration, int additionalCosts){
 		super(contractno, date, place);
 		this.startDate = startDate;
 		this.duration = duration;
 		this.additionalCosts = additionalCosts;
 	}
-	public int getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 	public int getDuration() {
@@ -24,7 +24,7 @@ public class Tenancy extends Contract{
 		return additionalCosts;
 	}
     
-	public void setStartDate(int startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	public void setDuration(int duration) {
