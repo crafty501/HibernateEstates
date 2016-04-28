@@ -42,7 +42,7 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				House house = new House(-1, panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), 0);
+				House house = new House(-1, panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), panel.getContractNr());
 				presenter.addHouse(house);
 				setVisible(false);
 				dispose();

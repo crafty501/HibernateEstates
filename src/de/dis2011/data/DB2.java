@@ -519,7 +519,7 @@ try {
 		addEstate.setString(6, estate.getLogin());
 		addEstate.setInt(7, estate.getPersonid());
 		addEstate.setInt(8, estate.getContractnr());
-		//System.out.println(x);
+		System.out.println("djhjsd"+estate.getContractnr());
 		addEstate.executeUpdate();
 
 		ResultSet rs = addEstate.getGeneratedKeys();

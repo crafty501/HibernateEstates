@@ -47,11 +47,11 @@ public class ModifyEstateFrame extends AbstractEstateFrame {
 				if(_panel instanceof HousePanel){
 					HousePanel panel = ((HousePanel)_panel);
 					
-					es = new House(estate.getId(), panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), 0);
+					es = new House(estate.getId(), panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), panel.getContractNr());
 
 				} else if (_panel instanceof ApartmentPanel) {
 					ApartmentPanel panel = ((ApartmentPanel)_panel);
-					es = new Apartment(estate.getId(), panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(),panel.getFloor(),panel.getRent(),panel.getRooms(),panel.hasKitchen(),panel.hasBalcony(), makler.getLogin(), panel.getPersonId(), 0);
+					es = new Apartment(estate.getId(), panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(),panel.getFloor(),panel.getRent(),panel.getRooms(),panel.hasKitchen(),panel.hasBalcony(), makler.getLogin(), panel.getPersonId(), panel.getContractNr());
 				}
 				
 				
