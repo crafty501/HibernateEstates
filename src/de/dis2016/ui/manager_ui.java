@@ -57,7 +57,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		_makler_list = db.getMarklers();
 		for(int i = 0 ; i < _makler_list.size(); i++){
 			Makler m = (Makler) _makler_list.get(i);
-			_listModel.addElement(i + "-" + m.getName() + "-" + m.getLogin());
+			_listModel.addElement(i + "-" + m.getName() + "-" + m.getId());
 		}
 		
 	}

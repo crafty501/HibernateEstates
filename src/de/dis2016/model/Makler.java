@@ -18,17 +18,17 @@ import java.sql.Statement;
  * password varchar(40));
  */
 public class Makler {
-	private int id = -1;
+	private String id ="";
 	private String name;
 	private String address;
 	private String login;
 	private String password;
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

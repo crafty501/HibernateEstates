@@ -16,8 +16,8 @@
 		<property name="show_sql">true</property>
 
 		<!-- Drop and re-create the database schema on startup -->
+		<!--  <property name="hbm2ddl.auto">update</property>-->
 		<property name="hbm2ddl.auto">create</property>
-
 		<mapping resource="de/dis2016/model/mapping/Person.hbm.xml" />
 		<mapping resource="de/dis2016/model/mapping/Makler.hbm.xml" />
 		<mapping resource="de/dis2016/model/mapping/Estate.hbm.xml" />

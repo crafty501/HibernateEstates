@@ -84,7 +84,9 @@ public class ContractsFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				createPerson = new CreatePerson();
 				add(createPerson, BorderLayout.CENTER);
-				contractPanel.setVisible(false);
+				if(contractPanel != null){
+					contractPanel.setVisible(false);
+				}
 				createPerson.setVisible(true);
 			}
 		});
@@ -94,8 +96,11 @@ public class ContractsFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				contractPanel = new ContractsPanel();
 				add(contractPanel, BorderLayout.CENTER);
+				if(createPerson != null){
+					createPerson.setVisible(false);	
+				}
 				contractPanel.setVisible(true);
-				createPerson.setVisible(false);
+				
 			}
 		});
 	

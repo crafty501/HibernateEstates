@@ -8,9 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Contract;
@@ -64,7 +67,16 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public void updateMakler(Makler makler, String old_login) {
-		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		
+		session.beginTransaction();
+	
+		Makler m = (Makler)session.get(Makler.class, old_login);
+		
+		
+		session.save(makler);
+		session.getTransaction().commit();
+		session.close();
 		
 	}
 
@@ -72,14 +84,16 @@ public class ImmoService implements IDB2 {
 	@Override
 	public void addMakler(Makler makler) {
 		
-		Session session = sessionFactory.openSession();
+		//Session session = sessionFactory.openSession();
 		
-		session.beginTransaction();
+		//session.beginTransaction();
 	
-		List<Makler> liste =   session.createCriteria(Makler.class).list();
-
+		//session.save(makler);
+		this.addObjekt(makler);
 		
-		return liste;
+		//session.getTransaction().commit();
+		//session.close();
+	
 	}
 
 	@Override
@@ -90,8 +104,10 @@ public class ImmoService implements IDB2 {
 		
 			session.beginTransaction();
 		
+			List<Makler> liste =   session.createCriteria(Makler.class).list();
 			
-			
+			session.getTransaction().commit();
+			session.close();
 			return liste;
 	}
 
@@ -104,10 +120,11 @@ public class ImmoService implements IDB2 {
 		
 		Makler m = new Makler();
 	
+		int id = Integer.valueOf(login);
 		Makler m2 = (Makler)session.get(Makler.class, login);
+		session.close();
 		
-		
-		return null;
+		return m2;
 	
 	}
 
@@ -115,25 +132,87 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public List<Estate> getEstates(String login) {
-		// TODO Auto-generated method stub
+		List<Estate> estates = new ArrayList<>();
+		estates.addAll(getHouses(login));
+		estates.addAll(getApartments(login));
 		return null;
 	}
 
 	@Override
 	public List<Estate> getHouses(String login) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Estate> list = sessionFactory.getCurrentSession().createCriteria(House.class)
+			    .add( Restrictions.like("login", login))
+			    .list();
+		return list;
 	}
 
 	@Override
 	public List<Estate> getApartments(String login) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Estate> list = sessionFactory.getCurrentSession().createCriteria(Apartment.class)
+			    .add( Restrictions.like("login", login))
+			    .list();
+		return list;
 	}
 
+	private void deleteObject(Object o) {
+		Transaction tx = null;
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	      tx = session.beginTransaction();
+	      session.delete(o);
+	      tx.commit();
+	    } catch (RuntimeException e) {
+	      if (tx != null && tx.isActive()) {
+	        try {
+	          tx.rollback();
+	        } catch (HibernateException e1) {
+	          System.err.println("Error rolling back transaction");
+	        }
+	        throw e;
+	      }
+	    }
+	}
+	
+	private void addObjekt(Object o){
+		Transaction tx = null;
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	      tx = session.beginTransaction();
+	      session.save(o);
+	      tx.commit();
+	    } catch (RuntimeException e) {
+	      if (tx != null && tx.isActive()) {
+	        try {
+	          tx.rollback();
+	        } catch (HibernateException e1) {
+	          System.err.println("Error rolling back transaction");
+	        }
+	        throw e;
+	      }
+	    }
+	}
+	
+	private void updateObject(Object o) {
+	    Transaction tx = null;
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	      tx = session.beginTransaction();
+	      session.update(o);
+	      tx.commit();
+	    } catch (RuntimeException e) {
+	      if (tx != null && tx.isActive()) {
+	        try {
+	          tx.rollback();
+	        } catch (HibernateException e1) {
+	          
+	        }
+	        throw e;
+	      }
+	    }
+	  }
 	@Override
 	public void deleteEstate(Estate estate) {
-		// TODO Auto-generated method stub
+		deleteObject(estate);	
 		
 	}
 
@@ -151,13 +230,13 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public int addEstate(Estate estate) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		addObjekt(estate);
+		return 0; //unused
 	}
 
 	@Override
 	public void updateEstate(Estate estate) {
-		// TODO Auto-generated method stub
+		updateObject(estate);
 		
 	}
 
@@ -176,24 +255,39 @@ public class ImmoService implements IDB2 {
 	@Override
 	public void addPerson(Person person) {
 		// TODO Auto-generated method stub
-		
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(person);
+		session.getTransaction().commit();
+		sessionFactory.close();
 	}
 
 	@Override
 	public void updatePerson(Person person, int id) {
-		// TODO Auto-generated method stub
-		
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Person p = (Person) session.get(Person.class, id);
+		p = person;
+		session.update(p);
+		session.getTransaction().commit();
+		sessionFactory.close();
 	}
 
 	@Override
-	public ArrayList<Person> getPersons() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Person> getPersons() {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Person> list = (List<Person>) session.createCriteria(Person.class).list();
+		sessionFactory.close();
+		return list;
 	}
 
 	@Override
 	public Person getPerson(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Person person = (Person) session.get(Person.class, id);
+		sessionFactory.close();
+		return person;
 	}
 }
