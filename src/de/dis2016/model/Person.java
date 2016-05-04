@@ -1,11 +1,5 @@
 package de.dis2016.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
 CREATE TABLE Person(
     ID          integer NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -21,6 +15,8 @@ public class Person {
 	private String firstName;
 	private String name;
 	private String adress;
+	
+	public Person() {}
 	
 	public int getId() {
 		return id;

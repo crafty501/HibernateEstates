@@ -1,12 +1,5 @@
 package de.dis2016.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-
 /**
  * Makler-Bean
  * 
@@ -23,6 +16,8 @@ public class Makler {
 	private String address;
 	private String login;
 	private String password;
+	
+	public Makler() {}
 	
 	public String getId() {
 		return id;

@@ -6,7 +6,7 @@ public class House extends Estate{
 	private int price;
 	private boolean garden;
 	
-	
+	public House() {}
 	
 	
 	public House(int id, String city, String postalCode, String street, String streetNr, int squareArea,

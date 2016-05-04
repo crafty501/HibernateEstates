@@ -12,7 +12,7 @@ public abstract class Estate {
 	private int personid;
 	private int contractnr;
 	
-	
+	public Estate() {}
 	
 	public Estate(int id, String city, String postalCode, String street, String streetNr, int squareArea, String login, int personid, int contractnr) {
 		this.id = id;

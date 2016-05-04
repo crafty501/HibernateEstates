@@ -7,6 +7,8 @@ public class Purchase extends Contract{
 	private int noOfInstallments;
 	private int intrestRate;
 
+	public Purchase() {}
+	
 	public Purchase(int contractno, Date date, String place, int noOfInstallments, int intrestRate){
 		super(contractno, date, place);
 		this.noOfInstallments = noOfInstallments;

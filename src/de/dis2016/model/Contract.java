@@ -7,6 +7,8 @@ public abstract class Contract {
 	private Date date;
 	private String place;
 	
+	public Contract() {}
+	
 	public Contract(int id, Date date, String place){
 		this.id = id;
 		this.date = date;

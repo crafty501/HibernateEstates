@@ -8,6 +8,8 @@ public class Tenancy extends Contract{
 	private int duration;
 	private int additionalCosts;
 	
+	public Tenancy() {}
+	
 	public Tenancy(int contractno, Date date, String place, Date startDate, int duration, int additionalCosts){
 		super(contractno, date, place);
 		this.startDate = startDate;
