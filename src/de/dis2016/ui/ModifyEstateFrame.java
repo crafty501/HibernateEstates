@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import de.dis2011.data.Makler;
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Estate;
 import de.dis2016.model.House;
+import de.dis2016.model.Makler;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class ModifyEstateFrame extends AbstractEstateFrame {

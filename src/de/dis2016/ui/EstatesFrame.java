@@ -18,11 +18,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import de.dis2011.data.Makler;
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Estate;
 import de.dis2016.model.EstateTableModel;
 import de.dis2016.model.House;
+import de.dis2016.model.Makler;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class EstatesFrame extends JFrame {

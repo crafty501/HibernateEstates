@@ -22,7 +22,7 @@ public abstract class Estate {
 		this.streetNr = streetNr;
 		this.squareArea = squareArea;
 		this.login = login;
-		this. personid = personid;
+		this.personid = personid;
 		this.contractnr = contractnr;
 	}
 	public int getId() {
@@ -55,7 +55,7 @@ public abstract class Estate {
 	public void setStreetNr(String streetNr) {
 		this.streetNr = streetNr;
 	}
-	public int getSuareArea() {
+	public int getSquareArea() {
 		return squareArea;
 	}
 	public void setSquareArea(int squareArea) {

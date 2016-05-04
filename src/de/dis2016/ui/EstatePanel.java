@@ -108,7 +108,7 @@ public abstract class EstatePanel extends JPanel{
 		
 		tfCity.setText(estate.getCity());
 		tfPostalCode.setText(estate.getPostalCode());
-		tfsquareArea.setText(String.valueOf(estate.getSuareArea()));
+		tfsquareArea.setText(String.valueOf(estate.getSquareArea()));
 		tfStreet.setText(estate.getStreet());
 		tfStreetNr.setText(estate.getStreetNr());
 		tfPersonId.setText(String.valueOf(estate.getPersonid()));

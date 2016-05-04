@@ -32,8 +32,8 @@ public class ContractsFrame extends JFrame{
 	
 //	private JTable contracts = new JTable();
 	
-	private JPanel contractPanel = new ContractsPanel();
-	private JPanel createPerson = new CreatePerson();
+	private JPanel contractPanel;
+	private JPanel createPerson;
 	
 	public ContractsFrame(){
 	super();
@@ -75,14 +75,14 @@ public class ContractsFrame extends JFrame{
 		//this.add(new JScrollPane(contracts), BorderLayout.CENTER);
 		
 		
-		contractPanel.setVisible(false);
-		createPerson.setVisible(false);
+		
+		
 
 		newPersonButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				createPerson = new CreatePerson();
 				add(createPerson, BorderLayout.CENTER);
 				contractPanel.setVisible(false);
 				createPerson.setVisible(true);
@@ -92,6 +92,7 @@ public class ContractsFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				contractPanel = new ContractsPanel();
 				add(contractPanel, BorderLayout.CENTER);
 				contractPanel.setVisible(true);
 				createPerson.setVisible(false);

@@ -3,18 +3,18 @@ package de.dis2016.model;
 import java.sql.Date;
 
 public abstract class Contract {
-	private int contractno;
+	private int id;
 	private Date date;
 	private String place;
 	
-	public Contract(int contractno, Date date, String place){
-		this.contractno = contractno;
+	public Contract(int id, Date date, String place){
+		this.id = id;
 		this.date = date;
 		this.place = place;
 	}
 	
-	public int getContractno() {
-		return contractno;
+	public int getId() {
+		return id;
 	}
 	public Date getDate() {
 		return date;
@@ -23,8 +23,8 @@ public abstract class Contract {
 		return place;
 	}
     
-	public void setContractno(int contractno) {
-		this.contractno = contractno;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setDate(Date date) {
 		this.date = date ;

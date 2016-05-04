@@ -51,7 +51,7 @@ public class EstateTableModel extends AbstractTableModel{
                 value = estate.getStreetNr();
                 break;
             case 5:
-                value = estate.getSuareArea();
+                value = estate.getSquareArea();
                 break;
         }
 

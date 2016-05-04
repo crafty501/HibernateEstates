@@ -4,35 +4,30 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import de.dis2011.data.DB2;
-import de.dis2011.data.DB2ConnectionManager;
+import de.dis2011.data.IDB2;
+import de.dis2011.data.ImmoService;
 import de.dis2016.model.Contract;
 import de.dis2016.model.Purchase;
 import de.dis2016.model.Tenancy;
-import de.dis2011.data.Contractsdb;
 
 
 public class ContractsPanel extends JPanel implements ActionListener,MouseListener{
@@ -53,8 +48,8 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 	private void UpdateUI(){
 	_listModel.clear();
 	
-	DB2 db = new DB2();
-	_contract_list = db.load_all_contracts();
+	IDB2 db = new ImmoService();
+	_contract_list = db.getContracts();
 	if(_contract_list.size() == 0){
 		// Die MarklerListe ist noch komplett leer
 		
@@ -65,7 +60,7 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		for(int i = 0 ; i < _contract_list.size(); i++){
 			
 			Contract c = _contract_list.get(i);
-			int Contract_No = c.getContractno();
+			int Contract_No = c.getId();
 			_listModel.addElement("[" +Contract_No+"]");
 		}
 		
@@ -228,7 +223,7 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		super();
 		
 		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
-		DB2 db = new DB2();
+		IDB2 db = new ImmoService();
 		//this._contract_list = db.Gib_alle_Contracts();
 		
 		
@@ -298,9 +293,10 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 			}
 			
 			assert c !=  null : "Contract Objekt ist null!";
-			DB2 db = new DB2();
-			db.Save_as_New_Contract(c);
+			IDB2 db = new ImmoService();
 			
+			
+			db.addContract(c);
 			
 			this.UpdateUI();
 		}
@@ -337,7 +333,7 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 			
 			int index = _liste.getSelectedIndex();
 			
-			DB2 db = new DB2();
+			IDB2 db = new ImmoService();
 			
 			System.out.println(index);
 			

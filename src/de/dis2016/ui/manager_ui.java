@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -22,8 +23,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import de.dis2011.data.DB2;
-import de.dis2011.data.Makler;
+import de.dis2011.data.IDB2;
+import de.dis2011.data.ImmoService;
+import de.dis2016.model.Makler;
 
 public class manager_ui extends JFrame implements ActionListener,MouseListener{
 
@@ -38,7 +40,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 	JTextField _name_ed,_vorname_ed,_adresse_ed,_login_ed;
 	JPasswordField _password_ed;
 	JList _liste;
-	ArrayList<Makler> _makler_list;
+	List<Makler> _makler_list;
 	DefaultListModel<String> _listModel;
 	
 	
@@ -51,8 +53,8 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		System.out.println("MaklerListe ist noch komplett leer");
 		
 	}else{
-		DB2 db = new DB2();
-		_makler_list = db.Gib_alle_Markler();
+		IDB2 db = new ImmoService();
+		_makler_list = db.getMarklers();
 		for(int i = 0 ; i < _makler_list.size(); i++){
 			Makler m = (Makler) _makler_list.get(i);
 			_listModel.addElement(i + "-" + m.getName() + "-" + m.getLogin());
@@ -168,8 +170,8 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		super();
 		
 		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
-		DB2 db = new DB2();
-		this._makler_list = db.Gib_alle_Markler();
+		IDB2 db = new ImmoService();
+		this._makler_list = db.getMarklers();
 		
 		
 		this.setLayout(new BorderLayout());
@@ -219,14 +221,14 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			m.setName(Name);
 			m.setAddress(Adresse);
 			
-			DB2 db = new DB2();
-			db.Save_new_Makler(m);
+			IDB2 db = new ImmoService();
+			db.addMakler(m);
 			this._makler_list.add(m);
 			this.UpdateUI();
 		}
 		
 		if(source.equals(_speichern)){
-			DB2 db = new DB2();
+			IDB2 db = new ImmoService();
 			String Adresse 	= this._adresse_ed.getText();
 			String Name 	= this._name_ed.getText();
 			String Login	= this._login_ed.getText();
@@ -244,7 +246,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			String Login_old = split[2];
 		
 			
-			db.Save_existing_Makler(m,Login_old);
+			db.updateMakler(m, Login_old);
 		
 			this.UpdateUI();
 		}
@@ -267,7 +269,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		if(source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
 			
-			DB2 db = new DB2();
+			IDB2 db = new ImmoService();
 			
 			System.out.println(index);
 			
@@ -278,7 +280,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 				String[] split = ListElement.split("-");
 				String Login = split[2];
 			
-				Makler m = db.Gib_Makler(Login);
+				Makler m = db.getMakler(Login);
 		
 				assert m != null : "Der Makler konnte nicht aus der Datenbank gelesen werden.";
 			

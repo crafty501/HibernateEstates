@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -22,9 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import de.dis2011.data.DB2;
-import de.dis2011.data.DB2ConnectionManager;
-import de.dis2011.data.Person;
+import de.dis2011.data.IDB2;
+import de.dis2011.data.ImmoService;
+import de.dis2016.model.Person;
 
 public class CreatePerson extends JPanel implements ActionListener,MouseListener{
 
@@ -36,7 +37,7 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 	JCheckBox cbTenancy;
 	JTextField tfFirstName, tfName, tfAdress;
 	JList _liste;
-	ArrayList<Person> _person_list;
+	List<Person> _person_list;
 	DefaultListModel<String> _listModel;
 	
 	
@@ -49,11 +50,11 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 		System.out.println("Personenliste ist noch komplett leer");
 		
 	}else{
-		DB2 db = new DB2();
-		_person_list = db.Gib_alle_Person();
+		IDB2 db = new ImmoService();
+		_person_list = db.getPersons();
 		for(int i = 0 ; i < _person_list.size(); i++){
 			Person m = (Person) _person_list.get(i);
-			_listModel.addElement(m.getID() + "-" + m.getFirstName() + " " + m.getName());
+			_listModel.addElement(m.getId() + "-" + m.getFirstName() + " " + m.getName());
 		}
 		
 	}
@@ -152,8 +153,8 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 		super();
 		
 		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
-		DB2 db = new DB2();
-		this._person_list = db.Gib_alle_Person();
+		IDB2 db = new ImmoService();
+		this._person_list = db.getPersons();
 		
 		
 		this.setLayout(new BorderLayout());
@@ -199,14 +200,14 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 			m.setName(name);
 			m.setAdress(adress);
 			
-			DB2 db = new DB2();
-			db.Save_new_Person(m);
+			IDB2 db = new ImmoService();
+			db.addPerson(m);
 			this._person_list.add(m);
 			this.UpdateUI();
 		}
 		
 		if(source.equals(_speichern)){
-			DB2 db = new DB2();
+			IDB2 db = new ImmoService();
 			String firstName 	= this.tfFirstName.getText();
 			String name 	= this.tfName.getText();
 			String adress	= this.tfAdress.getText();
@@ -222,7 +223,7 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 			int id = Integer.parseInt(split[0]);
 		
 			
-			db.Save_existing_Person(m,id);
+			db.updatePerson(m, id);
 		
 			this.UpdateUI(); 
 		}
@@ -245,9 +246,9 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 		if(source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
 			
-			DB2 db = new DB2();
+			IDB2 db = new ImmoService();
 			
-			System.out.println(index);
+			
 			
 			
 			if( index != -1 ){ // Die Gui ist dann noch leer
@@ -256,7 +257,7 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 			
 				String[] split = old_values.split("-");
 				int id = Integer.parseInt(split[0]);
-				Person m = db.Gib_Person(id);
+				Person m = db.getPerson(id);
 				
 		
 				assert m != null : "Die Person konnte nicht aus der Datenbank gelesen werden.";

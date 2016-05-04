@@ -11,7 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import de.dis2011.data.DB2;
+import de.dis2011.data.IDB2;
+import de.dis2011.data.ImmoService;
 import de.dis2016.presenter.EstatesPresenter;
 import de.dis2016.presenter.ContractsPresenter;
 
@@ -67,7 +68,7 @@ public class main_ui extends JFrame implements ActionListener{
 	
 		
 		
-		DB2 db = new DB2();
+		IDB2 db = new ImmoService();
 		
 		estates = new EstatesFrame();
 		estates.setPresenter(new EstatesPresenter(estates,db));

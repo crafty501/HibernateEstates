@@ -35,5 +35,6 @@ public class House extends Estate{
 		this.garden = garden;
 	}
 	
+	
 
 }

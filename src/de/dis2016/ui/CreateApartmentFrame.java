@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import de.dis2011.data.Makler;
 import de.dis2016.model.Apartment;
 import de.dis2016.model.House;
+import de.dis2016.model.Makler;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class CreateApartmentFrame extends AbstractEstateFrame {
