@@ -61,26 +61,29 @@ public class ContractsFrame extends JFrame{
 		this.add(pnlButtons, BorderLayout.NORTH);
 		this.add(pnl2Buttons, BorderLayout.SOUTH);
 
+		createPerson = new CreatePerson(db);
+		contractPanel = new ContractsPanel(db);
+		
+		
+		
+		contractPanel.setVisible(false);
+		createPerson.setVisible(false);
+		
+		
 		newPersonButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				createPerson = new CreatePerson(db);
 				add(createPerson, BorderLayout.CENTER);
-				if(contractPanel != null){
-					contractPanel.setVisible(false);
-				}
+				contractPanel.setVisible(false);
 				createPerson.setVisible(true);
 			}
 		});
 		ContractButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				contractPanel = new ContractsPanel(db);
 				add(contractPanel, BorderLayout.CENTER);
-				if(createPerson != null){
-					createPerson.setVisible(false);	
-				}
+				createPerson.setVisible(false);	
 				contractPanel.setVisible(true);
 				
 			}

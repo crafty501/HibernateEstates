@@ -10,14 +10,9 @@ public class Apartment extends Estate{
 		
 	
 	
-	public Apartment(int id, String city, String postalCode, String street, String streetNr, int squareArea,
-			int floor, int rent, int rooms, boolean kitchen, boolean balcony, String login,int personid, int contractnr) {
-		super(id, city, postalCode, street, streetNr, squareArea, login, personid, contractnr);
-		this.floor = floor;
-		this.rent = rent;
-		this.rooms = rooms;
-		this.kitchen = kitchen;
-		this.balcony = balcony;
+	public Apartment() {
+		super();
+		
 	}
 	public int getFloor() {
 		return floor;

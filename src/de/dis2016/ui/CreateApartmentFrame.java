@@ -44,7 +44,20 @@ public class CreateApartmentFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Apartment apartment = new Apartment(-1, panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(),panel.getFloor(),panel.getRent(),panel.getRooms(),panel.hasKitchen(),panel.hasBalcony(), makler.getLogin(), panel.getPersonId(), panel.getContractNr());
+				Apartment apartment = new Apartment();
+				apartment.setId(-1);
+				apartment.setCity(panel.getCity());
+				apartment.setPostalCode(panel.getPostalCode());
+				apartment.setStreet(panel.getStreet());
+				apartment.setStreetNr(panel.getStreetNr());
+				apartment.setSquareArea(panel.getSuareArea());
+				apartment.setFloor(panel.getFloor());
+				apartment.setRent(panel.getRent());
+				apartment.setRooms(panel.getRooms());
+				apartment.setKitchen(panel.hasKitchen());
+				apartment.setBalcony(panel.hasBalcony());
+				
+				
 				try {
 					presenter.addApartment(apartment);
 				} catch (SQLException e1) {

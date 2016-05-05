@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import de.dis2016.model.Apartment;
 import de.dis2016.model.House;
 import de.dis2016.model.Makler;
 import de.dis2016.presenter.EstatesPresenter;
@@ -43,7 +44,23 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				House house = new House(-1, panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), panel.getContractNr());
+				
+				House house = new House();
+				house.setId(-1);
+				house.setCity(panel.getCity());
+				house.setPostalCode(panel.getPostalCode());
+				house.setStreet(panel.getStreet());
+				house.setStreetNr(panel.getStreetNr());
+				house.setSquareArea(panel.getSuareArea());
+				house.setFloors(panel.getFloors());
+				house.setPrice(panel.getPrice());
+				house.setGarden(panel.hasGarden());
+				house.setLogin(makler.getLogin());
+				house.setPersonid(panel.getPersonId());
+				house.setContractnr(panel.getContractNr());
+				
+				
+				
 				try {
 					presenter.addHouse(house);
 				} catch (SQLException e1) {
