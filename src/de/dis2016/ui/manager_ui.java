@@ -77,7 +77,7 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			_makler_list = db.getMarklers();
 			for(int i = 0 ; i < _makler_list.size(); i++){
 				Makler m = (Makler) _makler_list.get(i);
-				_listModel.addElement(i + "-" + m.getName() + "-" + m.getId());
+				_listModel.addElement(i + "-" + m.getName() + "-" + m.getLogin());
 			}
 		}
 	}
@@ -203,24 +203,25 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		}
 		
 		if(source.equals(_speichern)){
-			String Adresse 	= this._adresse_ed.getText();
-			String Name 	= this._name_ed.getText();
-			String Login	= this._login_ed.getText();
-			String Passwort = this._password_ed.getPassword().toString();
-			
-			Makler m = new Makler();
-			m.setAddress(Adresse);
-			m.setLogin(Login);
-			m.setName(Name);
-			m.setPassword(Passwort);
 			int index = _liste.getSelectedIndex();
 			String old_values = _listModel.getElementAt(index);
 			
 			String[] split = old_values.split("-");
-			String Login_old = split[2];
+			String login_old = split[2];
+			
+			Makler m = new Makler();
+			for(int i=0; i < _makler_list.size();i++ ){
+				if(login_old.equals(_makler_list.get(i).getLogin())){
+					m = _makler_list.get(i);
+				}
+			};
+			
+			m.setAddress(this._adresse_ed.getText());
+			//m.setLogin(this._login_ed.getText());
+			m.setName(this._name_ed.getText());
+			m.setPassword(this._password_ed.getPassword().toString());
 					
-			db.updateMakler(m, Login_old);
-		
+			db.updateMakler(m);
 			this.UpdateUI();
 		}
 		

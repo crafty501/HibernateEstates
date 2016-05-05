@@ -11,7 +11,7 @@ package de.dis2016.model;
  * password varchar(40));
  */
 public class Makler {
-	private String id ="";
+//	private String id ="";
 	private String name;
 	private String address;
 	private String login;
@@ -19,13 +19,13 @@ public class Makler {
 	
 	public Makler() {}
 	
-	public String getId() {
-		return id;
-	}
+//	public String getId() {
+//		return id;
+//	}
 	
-	public void setId(String id) {
-		this.id = id;
-	}
+//	public void setId(String id) {
+//		this.id = id;
+//	}
 	
 	public String getName() {
 		return name;

@@ -16,17 +16,15 @@ import de.dis2016.model.Tenancy;
 public interface IDB2  {
 
 	//Contracts
-	public int addContract(Contract contract);
+	public void addContract(Contract contract);
 	public List<Contract>  getContracts();
-	public void addTenancy(Tenancy tenancy);
-	public void addPurchase(Purchase purchase); 
 	
 	
 	//Makler
 	public void addMakler(Makler makler);
 	public List<Makler> getMarklers() ;
 	public Makler getMakler(String login) ;
-	public void updateMakler(Makler makler, String old_login) ;
+	public void updateMakler(Makler makler) ;
 	
 	//Estates
 	public List<Estate> getEstates(String login) ;

@@ -17,8 +17,8 @@ public class EstatesPresenter {
 	}
 	
 	public boolean logIn(String login) {
+		
 		Makler makler = db.getMakler(login);
-
 		boolean success = false;
 		if (makler!=null) {
 			success = true;

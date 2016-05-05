@@ -184,7 +184,6 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 			String old_values = _listModel.getElementAt(index);
 			String[] split = old_values.split("-");
 			int id = Integer.parseInt(split[0]);
-			System.out.println("id: "+id);
 			Person m = new Person();
 			for(int i=0; i < _person_list.size();i++ ){
 				if(id == _person_list.get(i).getId()){

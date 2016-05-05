@@ -41,35 +41,22 @@ public class ImmoService implements IDB2 {
 	}
 
 	@Override
-	public int addContract(Contract contract) {
-		return 0;
+	public void addContract(Contract contract) {
+		addObjekt(contract);
 	}
 
 	@Override
 	public List<Contract> getContracts() {
-		return null;
-	}
-
-	@Override
-	public void addTenancy(Tenancy tenancy) {
-	}
-
-	@Override
-	public void addPurchase(Purchase purchase) {
-	}
-
-	@Override
-	public void updateMakler(Makler makler, String old_login) {
 		Session session = sessionFactory.getCurrentSession();
-		
 		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Contract> list = (List<Contract>) session.createCriteria(Contract.class).list();
+		return list;
+	}
 
-		Makler m = (Makler) session.get(Makler.class, old_login);
-
-		session.save(makler);
-		session.getTransaction().commit();
-		session.close();
-
+	@Override
+	public void updateMakler(Makler makler) {
+		updateObject(makler);
 	}
 
 	@Override
@@ -79,41 +66,33 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public List<Makler> getMarklers() {
-		List<Makler> liste = new ArrayList<>();
-		Transaction tx = null;
 		Session session = sessionFactory.getCurrentSession();
-		try {
-			tx = session.beginTransaction();
-			liste.addAll(session.createCriteria(Makler.class).list());
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-					System.err.println("Error rolling back transaction");
-				}
-				throw e;
-			}
-		}
-		return liste;
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Makler> list = (List<Makler>) session.createCriteria(Makler.class).list();
+		return list;
 	}
 
 	@Override
 	public Makler getMakler(String login) {
 		Session session = sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		Makler makler = (Makler) sessionFactory.openSession().get(Makler.class, login);
-		tx.commit();
+		session.beginTransaction();
+		Makler makler = (Makler) session.get(Makler.class, login);
 		return makler;
 	}
 
 	@Override
 	public List<Estate> getEstates(String login) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Estate> list = (List<Estate>) session.createCriteria(Estate.class).list();
+		return list;
+		/*
 		List<Estate> estates = new ArrayList<>();
 		estates.addAll(getAllEstates(House.class, login));
 		estates.addAll(getAllEstates(Apartment.class, login));
-		return estates;
+		return estates;*/
 	}
 
 	@Override
@@ -168,47 +147,22 @@ public class ImmoService implements IDB2 {
 	}
 
 	private void addObjekt(Object o) {
-		Transaction tx = null;
 		Session session = sessionFactory.getCurrentSession();
-		try {
-			tx = session.beginTransaction();
-			session.save(o);
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-					System.err.println("Error rolling back transaction");
-				}
-				throw e;
-			}
-		}
+		session.beginTransaction();
+		session.save(o);
+		session.getTransaction().commit();
 	}
 
 	private void updateObject(Object o) {
-		Transaction tx = null;
 		Session session = sessionFactory.getCurrentSession();
-		try {
-			tx = session.beginTransaction();
-			session.update(o);
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-					tx.rollback();
-				} catch (HibernateException e1) {
-
-				}
-				throw e;
-			}
-		}
+		session.beginTransaction();
+		session.update(o);
+		session.getTransaction().commit();
 	}
 
 	@Override
 	public void deleteEstate(Estate estate) {
 		deleteObject(estate);
-
 	}
 
 	@Override
@@ -232,7 +186,6 @@ public class ImmoService implements IDB2 {
 	@Override
 	public void updateEstate(Estate estate) {
 		updateObject(estate);
-
 	}
 
 	@Override
@@ -249,27 +202,20 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public void addPerson(Person person) {
-		// TODO Auto-generated method stub
-		Session session = sessionFactory.getCurrentSession();
-		session.beginTransaction();
-		session.save(person);
-		session.getTransaction().commit();
+		addObjekt(person);
 	}
 
 	@Override
 	public void updatePerson(Person person) {
-		Session session = sessionFactory.getCurrentSession();
-		session.beginTransaction();
-		session.update(person);
-		session.getTransaction().commit();
+		updateObject(person);
 	}
 
 	@Override
 	public List<Person> getPersons() {
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<Person> list = (List<Person>) session.createCriteria(Person.class).list();
-
 		return list;
 	}
 

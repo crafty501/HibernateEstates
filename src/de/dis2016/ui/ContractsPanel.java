@@ -43,8 +43,6 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 	
 	public ContractsPanel(IDB2 db){
 		super();
-		
-		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
 		//this._contract_list = db.Gib_alle_Contracts();
 		
 		this.db = db;
@@ -59,7 +57,6 @@ public class ContractsPanel extends JPanel implements ActionListener,MouseListen
 		this.add(Liste,BorderLayout.EAST);
 		this.setSize(800, 500);
 
-        
         this.UpdateUI();
 	}
 	

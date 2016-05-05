@@ -37,9 +37,9 @@ public class LoginFrame extends JFrame {
 
 		JPanel pnlTextfields = new JPanel();
 		pnlTextfields.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Sicherheitsabfrage"),
-						BorderFactory.createEmptyBorder(5, 5, 5, 5)),
-				pnlTextfields.getBorder()));
+			BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Sicherheitsabfrage"),
+			BorderFactory.createEmptyBorder(5, 5, 5, 5)),
+			pnlTextfields.getBorder()));
 		pnlTextfields.setLayout(new GridLayout(2, 1));
 
 		JPanel pnlLogin = new JPanel();
@@ -75,8 +75,6 @@ public class LoginFrame extends JFrame {
 		pnlButtons.add(weiter);
 
 		this.setLayout(new BorderLayout());
-
-		
 		
 		this.add(pnlTextfields, BorderLayout.CENTER);
 		this.add(pnlButtons, BorderLayout.SOUTH);
