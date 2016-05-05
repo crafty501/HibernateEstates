@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -43,7 +44,12 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				House house = new House(-1, panel.getCity(), panel.getPostalCode(), panel.getStreet(), panel.getStreetNr(), panel.getSuareArea(), panel.getFloors(), panel.getPrice(), panel.hasGarden(),makler.getLogin(),panel.getPersonId(), panel.getContractNr());
-				presenter.addHouse(house);
+				try {
+					presenter.addHouse(house);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				setVisible(false);
 				dispose();
 //				boolean success = presenter.addHouse(makler,house);

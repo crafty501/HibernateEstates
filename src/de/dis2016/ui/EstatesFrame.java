@@ -43,7 +43,7 @@ public class EstatesFrame extends JFrame {
 	private Makler makler;
 
 
-	public EstatesFrame(IDB2 db) {
+	public EstatesFrame() {
 		super();
 
 		this.setLayout(new BorderLayout());

@@ -1,5 +1,7 @@
 package de.dis2016.presenter;
 
+import java.sql.SQLException;
+
 import de.dis2011.data.IDB2;
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Estate;
@@ -40,14 +42,14 @@ public class EstatesPresenter {
 
 
 
-	public void addHouse(House house) {
-		db.addHouse(house);
+	public void addHouse(House house) throws SQLException {
+		db.addEstate(house);
 		view.setEstates(db.getEstates(house.getLogin()));		
 	}
 
 
-	public void addApartment(Apartment apartment) {
-		db.addApartment(apartment);
+	public void addApartment(Apartment apartment) throws SQLException {
+		db.addEstate(apartment);
 		view.setEstates(db.getEstates(apartment.getLogin()));
 	}
 

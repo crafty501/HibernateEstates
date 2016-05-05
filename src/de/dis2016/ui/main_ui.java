@@ -61,7 +61,7 @@ public class main_ui extends JFrame implements ActionListener{
 		super();
 		db = new ImmoService();
 		
-		estates = new EstatesFrame(db);
+		estates = new EstatesFrame();
 		estates.setPresenter(new EstatesPresenter(estates,db));
 		
 		contracts = new ContractsFrame(db);
