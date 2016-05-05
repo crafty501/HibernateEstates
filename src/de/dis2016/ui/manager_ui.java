@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -24,56 +23,73 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import de.dis2011.data.IDB2;
-import de.dis2011.data.ImmoService;
 import de.dis2016.model.Makler;
 
 public class manager_ui extends JFrame implements ActionListener,MouseListener{
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	JButton _neu;
 	JButton _speichern;
 	JButton _ende;
 	JTextField _name_ed,_vorname_ed,_adresse_ed,_login_ed;
 	JPasswordField _password_ed;
-	JList _liste;
+	JList<String> _liste;
 	List<Makler> _makler_list;
 	DefaultListModel<String> _listModel;
+	private IDB2 db;
 	
+	public manager_ui(IDB2 db){
+		super();
+		this.db = db;
+		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
+		this._makler_list = db.getMarklers();
+		
+		this.setLayout(new BorderLayout());
+		JPanel Eingabe 	= this.Generate_Eingabefelder();
+		JPanel Leiste 	= this.ButtonLeiste();
+		JPanel Liste	= this.Generate_Liste();
+		this.add(Eingabe,BorderLayout.CENTER);
+		this.add(Leiste,BorderLayout.SOUTH);
+		this.add(Liste,BorderLayout.EAST);
+		this.setSize(800, 400);
+		this.setResizable(false);
+		this.setTitle("Manage Estate Managers");
+		//Get the size of the screen
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        // Determine the nfalseew location of the window
+        int w = this.getSize().width;
+        int h = this.getSize().height;
+        int x = (dim.width-w)/2;
+        int y = (dim.height-h)/2;
+        // Move the window
+        this.setLocation(x, y);
+        
+        this.UpdateUI();
+	}
 	
 	private void UpdateUI(){
-	_listModel.clear();
+		_listModel.clear();
 	
-	if(_makler_list.size() == 0){
-		
-		// Die MarklerListe ist noch komplett leer
-		System.out.println("MaklerListe ist noch komplett leer");
-		
-	}else{
-		IDB2 db = new ImmoService();
-		_makler_list = db.getMarklers();
-		for(int i = 0 ; i < _makler_list.size(); i++){
-			Makler m = (Makler) _makler_list.get(i);
-			_listModel.addElement(i + "-" + m.getName() + "-" + m.getId());
+		if(_makler_list.size() == 0){
+			// Die MarklerListe ist noch komplett leer
+			System.out.println("MaklerListe ist noch komplett leer");
+		}else{
+			_makler_list = db.getMarklers();
+			for(int i = 0 ; i < _makler_list.size(); i++){
+				Makler m = (Makler) _makler_list.get(i);
+				_listModel.addElement(i + "-" + m.getName() + "-" + m.getId());
+			}
 		}
-		
 	}
-	
-	}
-	
-	
 	
 	private JPanel Generate_Eingabefelder(){
 		
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("Datensatz"),
-                        BorderFactory.createEmptyBorder(5,5,5,5)),
-        main.getBorder()));
+            BorderFactory.createCompoundBorder(
+            	BorderFactory.createTitledBorder("Datensatz"),
+            	BorderFactory.createEmptyBorder(5,5,5,5)),
+            	main.getBorder()));
 		main.setSize(500,600);
 		main.setLayout(new GridLayout(9,1));
 		
@@ -115,18 +131,13 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		box_7.add(_password_ed,BorderLayout.CENTER);
 		main.add(box_7);
 		
-		
 		return main;
-		
 	}
 	
 	private JPanel ButtonLeiste(){
-		
-		
 		JPanel main = new JPanel();
 		main.setLayout(new FlowLayout());
 		
-		//Neu
 		_neu 		= new JButton();
 		_neu.setText("Save as new");
 		_neu.addActionListener(this);
@@ -143,58 +154,23 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 		return main;
 	}
 	
-	
-	private JPanel Generate_Liste(){
-		
+	private JPanel Generate_Liste(){	
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("Estate Agents"),
-                        BorderFactory.createEmptyBorder(5,5,5,5)),
-        main.getBorder()));
+            BorderFactory.createCompoundBorder(
+            	BorderFactory.createTitledBorder("Estate Agents"),
+                BorderFactory.createEmptyBorder(5,5,5,5)),
+            	main.getBorder()));
 		_listModel = new DefaultListModel<String>();
-		_liste = new JList(_listModel);
+		_liste = new JList<String>(_listModel);
 		_liste.addMouseListener(this);
-	//	_liste.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		_liste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		//_liste.setVisibleRowCount(-1);
 		
 		JScrollPane listScroller = new JScrollPane(_liste);
 		listScroller.setPreferredSize(new Dimension(400, 250));
 		
 		main.add(listScroller);
 		return main;
-	}
-	
-	public manager_ui(){
-		super();
-		
-		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
-		IDB2 db = new ImmoService();
-		this._makler_list = db.getMarklers();
-		
-		
-		this.setLayout(new BorderLayout());
-		JPanel Eingabe 	= this.Generate_Eingabefelder();
-		JPanel Leiste 	= this.ButtonLeiste();
-		JPanel Liste	= this.Generate_Liste();
-		this.add(Eingabe,BorderLayout.CENTER);
-		this.add(Leiste,BorderLayout.SOUTH);
-		this.add(Liste,BorderLayout.EAST);
-		this.setSize(800, 400);
-		this.setResizable(false);
-		this.setTitle("Manage Estate Managers");
-		//Get the size of the screen
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        // Determine the nfalseew location of the window
-        int w = this.getSize().width;
-        int h = this.getSize().height;
-        int x = (dim.width-w)/2;
-        int y = (dim.height-h)/2;
-        // Move the window
-        this.setLocation(x, y);
-        
-        this.UpdateUI();
 	}
 
 	@Override
@@ -221,14 +197,12 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			m.setName(Name);
 			m.setAddress(Adresse);
 			
-			IDB2 db = new ImmoService();
 			db.addMakler(m);
 			this._makler_list.add(m);
 			this.UpdateUI();
 		}
 		
 		if(source.equals(_speichern)){
-			IDB2 db = new ImmoService();
 			String Adresse 	= this._adresse_ed.getText();
 			String Name 	= this._name_ed.getText();
 			String Login	= this._login_ed.getText();
@@ -244,35 +218,22 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 			
 			String[] split = old_values.split("-");
 			String Login_old = split[2];
-		
-			
+					
 			db.updateMakler(m, Login_old);
 		
 			this.UpdateUI();
 		}
 		
-		
 		if (source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
 			System.out.println(index);
 		}
-		
-		
-		
-		
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		
 		Object source = e.getSource();
 		if(source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
-			
-			IDB2 db = new ImmoService();
-			
-			System.out.println(index);
-			
 			
 			if( index != -1 ){ // Die Gui ist dann noch leer
 				
@@ -294,33 +255,14 @@ public class manager_ui extends JFrame implements ActionListener,MouseListener{
 				_login_ed.setText(Loginname);
 				_password_ed.setText(Passwort);
 			}
-		
 		}
-		
-		
-		
-		
-		
-		
 	}
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 }

@@ -42,32 +42,26 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public int addContract(Contract contract) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<Contract> getContracts() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void addTenancy(Tenancy tenancy) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void addPurchase(Purchase purchase) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void updateMakler(Makler makler, String old_login) {
-		Session session = sessionFactory.openSession();
-
+		Session session = sessionFactory.getCurrentSession();
+		
 		session.beginTransaction();
 
 		Makler m = (Makler) session.get(Makler.class, old_login);
@@ -256,39 +250,34 @@ public class ImmoService implements IDB2 {
 	@Override
 	public void addPerson(Person person) {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		session.save(person);
 		session.getTransaction().commit();
-		sessionFactory.close();
 	}
 
 	@Override
-	public void updatePerson(Person person, int id) {
-		Session session = sessionFactory.openSession();
+	public void updatePerson(Person person) {
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
-		Person p = (Person) session.get(Person.class, id);
-		p = person;
-		session.update(p);
+		session.update(person);
 		session.getTransaction().commit();
-		sessionFactory.close();
 	}
 
 	@Override
 	public List<Person> getPersons() {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		List<Person> list = (List<Person>) session.createCriteria(Person.class).list();
-		sessionFactory.close();
+
 		return list;
 	}
 
 	@Override
 	public Person getPerson(int id) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		Person person = (Person) session.get(Person.class, id);
-		sessionFactory.close();
 		return person;
 	}
 }

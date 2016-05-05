@@ -1,24 +1,8 @@
 
 package de.dis2011.data;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.swing.JOptionPane;
-
-import org.hibernate.Session;
-
 import de.dis2016.model.Apartment;
 import de.dis2016.model.Contract;
 import de.dis2016.model.Estate;
@@ -58,7 +42,7 @@ public interface IDB2  {
 	
 	//personen
 	public void addPerson(Person person);
-	public void updatePerson(Person person, int id);
+	public void updatePerson(Person person);
 	public List<Person> getPersons();
 	public Person getPerson(int id);
 }

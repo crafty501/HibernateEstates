@@ -14,39 +14,35 @@ import javax.swing.JPanel;
 import de.dis2011.data.IDB2;
 import de.dis2011.data.ImmoService;
 import de.dis2016.presenter.EstatesPresenter;
-import de.dis2016.presenter.ContractsPresenter;
+//import de.dis2016.presenter.EstatesPresenter;
+//import de.dis2016.presenter.ContractsPresenter;
 
 public class main_ui extends JFrame implements ActionListener{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JButton _estate_agents,_estates,_contracts,_exit;
-	private manager_ui _manager_ui;
 	private EstatesFrame estates;
 	private ContractsFrame contracts;
+	private IDB2 db;
 	
 	private JPanel ButtonLeiste(){
 		
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("Hauptmenü"),
-                        BorderFactory.createEmptyBorder(5,5,5,5)),
-        main.getBorder()));
+            BorderFactory.createCompoundBorder(
+            	BorderFactory.createTitledBorder("Hauptmenü"),
+                BorderFactory.createEmptyBorder(5,5,5,5)),
+            	main.getBorder()));
 		
-		
-		 _estate_agents = new JButton();
-		 _estate_agents.setText("Estate Agents");
-		 _estate_agents.addActionListener(this);
+		_estate_agents = new JButton();
+		_estate_agents.setText("Estate Agents");
+		_estate_agents.addActionListener(this);
 		main.add(_estate_agents);
 		
 		_estates = new JButton();
-		 _estates.setText("Estates");
-		 _estates.addActionListener(this);
+		_estates.setText("Estates");
+		_estates.addActionListener(this);
 		main.add(_estates);
-		
 		
 		_contracts = new JButton();
 		_contracts.setText("Persons and contracts");
@@ -61,20 +57,15 @@ public class main_ui extends JFrame implements ActionListener{
 		return main;
 	}
 	
-	
-	
 	public main_ui(){
 		super();
-	
+		db = new ImmoService();
 		
-		
-		IDB2 db = new ImmoService();
-		
-		estates = new EstatesFrame();
+		estates = new EstatesFrame(db);
 		estates.setPresenter(new EstatesPresenter(estates,db));
 		
-		contracts = new ContractsFrame();
-		contracts.setPresenter(new ContractsPresenter(contracts,db));
+		contracts = new ContractsFrame(db);
+		//contracts.setPresenter(new ContractsPresenter(contracts,db));
 		
 		this.setLayout(new BorderLayout());
 		JPanel menue = this.ButtonLeiste();
@@ -89,7 +80,6 @@ public class main_ui extends JFrame implements ActionListener{
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         // Determine the new location of the window
-        //int w = this.getSize().width;
         int h = this.getSize().height;
         int x = 100;
         int y = (dim.height-h)/2;
@@ -100,22 +90,14 @@ public class main_ui extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
-		
 		Object source = arg0.getSource();
-		if (source.equals(_estate_agents)){
-			
-			
-				LoginFrame2 login = new LoginFrame2();
-				
-				login.setVisible(true);
-			
-			
-				
+		if (source.equals(_estate_agents)){		
+			LoginFrame2 login = new LoginFrame2(db);	
+			login.setVisible(true);	
 		}
 		
 		if(source.equals(_estates)){
-				estates.setVisible(true);
+			estates.setVisible(true);
 		}
 		
 		if(source.equals(_contracts)){

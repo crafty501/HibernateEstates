@@ -4,19 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -24,53 +21,65 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import de.dis2011.data.IDB2;
-import de.dis2011.data.ImmoService;
 import de.dis2016.model.Person;
 
 public class CreatePerson extends JPanel implements ActionListener,MouseListener{
 
 	private static final long serialVersionUID = 1L;
-	
 	JButton _neu;
 	JButton _speichern;
 	JButton _ende;
 	JCheckBox cbTenancy;
 	JTextField tfFirstName, tfName, tfAdress;
-	JList _liste;
+	JList<String> _liste;
 	List<Person> _person_list;
 	DefaultListModel<String> _listModel;
+	private IDB2 db;
+	
+	public CreatePerson(IDB2 db){
+		super();
+		this.db = db;
+		
+		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
+		this._person_list = db.getPersons();
+		
+		this.setLayout(new BorderLayout());
+		JPanel Eingabe 	= this.Generate_Eingabefelder();
+		JPanel Leiste 	= this.ButtonLeiste();
+		JPanel Liste	= this.Generate_Liste();
+		this.add(Eingabe,BorderLayout.CENTER);
+		this.add(Leiste,BorderLayout.SOUTH);
+		this.add(Liste,BorderLayout.EAST);
+		this.setSize(800, 400);
+
+        this.UpdateUI();
+	}
+	
 	
 	
 	private void UpdateUI(){
-	_listModel.clear();
+		_listModel.clear();
 	
-	if(_person_list.size() == 0){
-		
-		// Die MarklerListe ist noch komplett leer
-		System.out.println("Personenliste ist noch komplett leer");
-		
-	}else{
-		IDB2 db = new ImmoService();
-		_person_list = db.getPersons();
-		for(int i = 0 ; i < _person_list.size(); i++){
-			Person m = (Person) _person_list.get(i);
-			_listModel.addElement(m.getId() + "-" + m.getFirstName() + " " + m.getName());
+		if(_person_list.size() == 0){
+			// Die MarklerListe ist noch komplett leer
+			System.out.println("Personenliste ist noch komplett leer");		
+		}else{
+			_person_list = db.getPersons();
+			for(int i = 0 ; i < _person_list.size(); i++){
+				Person m = (Person) _person_list.get(i);
+				_listModel.addElement(m.getId() + "-" + m.getFirstName() + " " + m.getName());
+			}
 		}
-		
 	}
-	
-	}
-	
-	
 	
 	private JPanel Generate_Eingabefelder(){
 		
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("Datensatz"),
-                        BorderFactory.createEmptyBorder(5,5,5,5)),
-        main.getBorder()));
+            BorderFactory.createCompoundBorder(
+            BorderFactory.createTitledBorder("Datensatz"),
+            BorderFactory.createEmptyBorder(5,5,5,5)),
+            main.getBorder()));
 		main.setSize(500,600);
 		main.setLayout(new GridLayout(9,1));
 		
@@ -108,8 +117,6 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 	}
 	
 	private JPanel ButtonLeiste(){
-		
-		
 		JPanel main = new JPanel();
 		main.setLayout(new FlowLayout());
 		
@@ -126,21 +133,17 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 		return main;
 	}
 	
-	
-	private JPanel Generate_Liste(){
-		
+	private JPanel Generate_Liste(){	
 		JPanel main = new JPanel();
 		main.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("Personen"),
-                        BorderFactory.createEmptyBorder(5,5,5,5)),
-        main.getBorder()));
+            BorderFactory.createCompoundBorder(
+            	BorderFactory.createTitledBorder("Personen"),
+            	BorderFactory.createEmptyBorder(5,5,5,5)),
+            	main.getBorder()));
 		_listModel = new DefaultListModel<String>();
-		_liste = new JList(_listModel);
+		_liste = new JList<String>(_listModel);
 		_liste.addMouseListener(this);
-	//	_liste.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		_liste.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		//_liste.setVisibleRowCount(-1);
 		
 		JScrollPane listScroller = new JScrollPane(_liste);
 		listScroller.setPreferredSize(new Dimension(400, 250));
@@ -149,42 +152,13 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 		return main;
 	}
 	
-	public CreatePerson(){
-		super();
-		
-		//Alle Markler, die in der Datenbank sind auf die Gui schmeissen
-		IDB2 db = new ImmoService();
-		this._person_list = db.getPersons();
-		
-		
-		this.setLayout(new BorderLayout());
-		JPanel Eingabe 	= this.Generate_Eingabefelder();
-		JPanel Leiste 	= this.ButtonLeiste();
-		JPanel Liste	= this.Generate_Liste();
-		this.add(Eingabe,BorderLayout.CENTER);
-		this.add(Leiste,BorderLayout.SOUTH);
-		this.add(Liste,BorderLayout.EAST);
-		this.setSize(800, 400);
-		//this.setResizable(false);
-		//this.setTitle("Manage Estate Managers");
-		//Get the size of the screen
-     //   Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        // Determine the nfalseew location of the window
-     //   int w = this.getSize().width;
-     //   int h = this.getSize().height;
-     //   int x = (dim.width-w)/2;
-     //   int y = (dim.height-h)/2;
-        // Move the window
-     //   this.setLocation(x, y);
-        
-        this.UpdateUI();
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
 		Object source = arg0.getSource();
-		System.out.println(source.toString());
+		//System.out.println(source.toString());
 		if(source.equals(_ende)){
 			this.setVisible(false);
 		}
@@ -199,69 +173,52 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 			m.setFirstName(firstName);
 			m.setName(name);
 			m.setAdress(adress);
-			
-			IDB2 db = new ImmoService();
 			db.addPerson(m);
 			this._person_list.add(m);
 			this.UpdateUI();
 		}
 		
 		if(source.equals(_speichern)){
-			IDB2 db = new ImmoService();
-			String firstName 	= this.tfFirstName.getText();
-			String name 	= this.tfName.getText();
-			String adress	= this.tfAdress.getText();
 			
-			Person m = new Person();
-			m.setFirstName(firstName);
-			m.setName(name);
-			m.setAdress(adress);
 			int index = _liste.getSelectedIndex();
 			String old_values = _listModel.getElementAt(index);
-			
 			String[] split = old_values.split("-");
 			int id = Integer.parseInt(split[0]);
-		
+			System.out.println("id: "+id);
+			Person m = new Person();
+			for(int i=0; i < _person_list.size();i++ ){
+				if(id == _person_list.get(i).getId()){
+					m = _person_list.get(i);
+				}
+			};
 			
-			db.updatePerson(m, id);
-		
+			
+			m.setFirstName(this.tfFirstName.getText());
+			m.setName(this.tfName.getText());
+			m.setAdress(this.tfAdress.getText());
+			
+			db.updatePerson(m);
 			this.UpdateUI(); 
 		}
-		
 		
 		if (source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
 			System.out.println(index);
-		}
-		
-		
-		
-		
+		}	
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		
 		Object source = e.getSource();
 		if(source.equals(_liste)){
 			int index = _liste.getSelectedIndex();
-			
-			IDB2 db = new ImmoService();
-			
-			
-			
-			
 			if( index != -1 ){ // Die Gui ist dann noch leer
-				
 				String old_values = _listModel.getElementAt(index);
-			
 				String[] split = old_values.split("-");
 				int id = Integer.parseInt(split[0]);
 				Person m = db.getPerson(id);
-				
 		
-				assert m != null : "Die Person konnte nicht aus der Datenbank gelesen werden.";
-			
+				assert m != null : "Die Person konnte nicht aus der Datenbank gelesen werden.";		
 				String firstName 	= m.getFirstName();
 				String name 		= m.getName();
 				String adress 	= m.getAdress();
@@ -270,14 +227,7 @@ public class CreatePerson extends JPanel implements ActionListener,MouseListener
 				tfName.setText(name);
 				tfAdress.setText(adress);
 			}
-		
-		}
-		
-		
-		
-		
-		
-		
+		}	
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

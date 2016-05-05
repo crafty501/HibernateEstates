@@ -9,23 +9,16 @@ import de.dis2016.ui.EstatesFrame;
 
 public class EstatesPresenter {
 
-	
 	EstatesFrame view;
-	private IDB2 data;
-	public EstatesPresenter(EstatesFrame view, IDB2 data) {
+	private IDB2 db;
+	public EstatesPresenter(EstatesFrame view, IDB2 db) {
 		this.view = view;
-		this.data = data;
+		this.db = db;
 	}
 	
-
 	public boolean logIn(String login) {
-		// TODO Auto-generated method stub
-		Makler makler = data.getMakler(login);
-		
-		//TODO loeschen
-		//makler = new Makler();
-		//makler.setLogin("test");
-//		***************
+		Makler makler = db.getMakler(login);
+
 		boolean success = false;
 		if (makler!=null) {
 			success = true;
@@ -33,7 +26,7 @@ public class EstatesPresenter {
 		
 		if (success) {
 			view.setMakler(makler);
-			view.setEstates(data.getEstates(login));
+			view.setEstates(db.getEstates(login));
 		}
 		return success;
 		
@@ -41,27 +34,27 @@ public class EstatesPresenter {
 
 
 	public void deleteEstate(Estate estate) {
-		data.deleteEstate(estate);
-		view.setEstates(data.getEstates(estate.getLogin()));
+		db.deleteEstate(estate);
+		view.setEstates(db.getEstates(estate.getLogin()));
 	}
 
 
 
 	public void addHouse(House house) {
-		data.addHouse(house);
-		view.setEstates(data.getEstates(house.getLogin()));		
+		db.addHouse(house);
+		view.setEstates(db.getEstates(house.getLogin()));		
 	}
 
 
 	public void addApartment(Apartment apartment) {
-		data.addApartment(apartment);
-		view.setEstates(data.getEstates(apartment.getLogin()));
+		db.addApartment(apartment);
+		view.setEstates(db.getEstates(apartment.getLogin()));
 	}
 
 
 	public void updateEstate(Estate estate) {
-		data.updateEstate(estate);
-		view.setEstates(data.getEstates(estate.getLogin()));
+		db.updateEstate(estate);
+		view.setEstates(db.getEstates(estate.getLogin()));
 	}
 	
 }

@@ -11,19 +11,11 @@ import de.dis2016.model.Makler;
 import de.dis2016.presenter.EstatesPresenter;
 
 public class DeleteEstateFrame extends AbstractEstateFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
+	private EstatePanel panel;
 	
-
-
 	public DeleteEstateFrame(final EstatesPresenter presenter, final Makler makler,final Estate estate) {
 		super();
-		
-		EstatePanel panel = new HousePanel();
 		if (estate instanceof House) {
 			panel = new HousePanel((House) estate);
 		} else if (estate instanceof Apartment) {
@@ -43,13 +35,6 @@ public class DeleteEstateFrame extends AbstractEstateFrame {
 				setVisible(false);
 				dispose();
 				
-			
-				
-				//boolean success = 
-				//if (success) {
-				//	setVisible(false);
-				//	dispose();
-				//}
 			}
 		});
 	}

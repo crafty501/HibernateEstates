@@ -15,25 +15,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-import de.dis2016.presenter.EstatesPresenter;
+import de.dis2011.data.IDB2;
 
 public class LoginFrame2 extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private manager_ui _manager_ui;
-	private JTextField _tfLogin;
+	//private JTextField _tfLogin;
 	private JPasswordField _tfPassword;
 	private JButton abbrechen;
 	private JButton weiter;
 
 
-	public LoginFrame2() {
+	public LoginFrame2(final IDB2 db) {
 		super();
 
 		// textfields *************************
@@ -88,7 +83,7 @@ public class LoginFrame2 extends JFrame {
 				
 				if(success) {
 					
-					_manager_ui = new manager_ui();
+					_manager_ui = new manager_ui(db);
 					_manager_ui.setVisible(true);
 					
 					setVisible(false);
