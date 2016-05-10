@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -59,14 +60,18 @@ public class CreateHouseFrame extends AbstractEstateFrame {
 				house.setPersonid(panel.getPersonId());
 				house.setContractnr(panel.getContractNr());
 				
-				
-				
 				try {
 					presenter.addHouse(house);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					
+					JOptionPane.showMessageDialog(null,
+						    e1.getMessage(),
+						    "Inane error",
+						    JOptionPane.ERROR_MESSAGE);
+					
 				}
+				
 				setVisible(false);
 				dispose();
 //				boolean success = presenter.addHouse(makler,house);

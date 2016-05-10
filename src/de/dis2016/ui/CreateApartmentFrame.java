@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -56,13 +57,20 @@ public class CreateApartmentFrame extends AbstractEstateFrame {
 				apartment.setRooms(panel.getRooms());
 				apartment.setKitchen(panel.hasKitchen());
 				apartment.setBalcony(panel.hasBalcony());
-				
+				apartment.setPersonid(panel.getPersonId());
+				apartment.setContractnr(panel.getContractNr());
 				
 				try {
+					
 					presenter.addApartment(apartment);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					
+					JOptionPane.showMessageDialog(null,
+						    e1.getMessage(),
+						    "Inane error",
+						    JOptionPane.ERROR_MESSAGE);
+					
 				}
 				setVisible(false);
 				dispose();

@@ -179,7 +179,22 @@ public class ImmoService implements IDB2 {
 
 	@Override
 	public int addEstate(Estate estate) throws SQLException {
+		int contractNumber 	= estate.getContractnr();
+		int personID 		= estate.getPersonid();  
+		
+		if (isgueltigerVertrag(contractNumber)){
+			if(isgueltigePerson(personID)){
+					addObjekt(estate);
+			}else{
+				SQLException e1 = new SQLException("Keine gültige Personnummer");
+				throw e1;
+			}
+		}else{
+			SQLException e2 = new SQLException("Keine gültige Vertragsnummer");
+			throw e2;
+		}
 		addObjekt(estate);
+		
 		return 0; // unused
 	}
 
@@ -225,5 +240,32 @@ public class ImmoService implements IDB2 {
 		session.beginTransaction();
 		Person person = (Person) session.get(Person.class, id);
 		return person;
+	}
+public boolean isgueltigerVertrag(int id){
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		Contract contract = (Contract) session.get(Contract.class, id);
+		
+		if(contract == null){
+			System.out.println("Contact number"+id+" false");
+			return false;
+		}else{
+			System.out.println("Contact number"+id+" true");
+			return true;
+		}
+	
+	}
+	
+public boolean isgueltigePerson(int id){
+		
+		Person p = this.getPerson(id);
+		
+		if(p == null){
+			return false;
+		}else{
+			return true;
+		}
+	
 	}
 }
