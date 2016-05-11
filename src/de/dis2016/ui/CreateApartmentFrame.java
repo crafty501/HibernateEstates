@@ -63,17 +63,18 @@ public class CreateApartmentFrame extends AbstractEstateFrame {
 				try {
 					
 					presenter.addApartment(apartment);
+					setVisible(false);
+					dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showMessageDialog(getFocusOwner(),
 						    e1.getMessage(),
 						    "Inane error",
 						    JOptionPane.ERROR_MESSAGE);
 					
 				}
-				setVisible(false);
-				dispose();
+				
 //				boolean success = 				if (success) {
 //					setVisible(false);
 //					dispose();

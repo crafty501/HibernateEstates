@@ -42,13 +42,13 @@ public class EstatesPresenter {
 
 
 
-	public void addHouse(House house) throws SQLException {
+	public void addHouse(House house) throws SQLException{
 		db.addEstate(house);
-		view.setEstates(db.getEstates(house.getLogin()));		
+		view.setEstates(db.getEstates(house.getLogin()));
 	}
 
 
-	public void addApartment(Apartment apartment) throws SQLException {
+	public void addApartment(Apartment apartment) throws SQLException{
 		db.addEstate(apartment);
 		view.setEstates(db.getEstates(apartment.getLogin()));
 	}

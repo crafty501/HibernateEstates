@@ -186,16 +186,17 @@ public class ImmoService implements IDB2 {
 			if(isgueltigePerson(personID)){
 					addObjekt(estate);
 			}else{
-				SQLException e1 = new SQLException("Keine gÃ¼ltige Personnummer");
+				SQLException e1 = new SQLException("Keine gültige Personnummer");
 				throw e1;
 			}
 		}else{
-			SQLException e2 = new SQLException("Keine gÃ¼ltige Vertragsnummer");
+			SQLException e2 = new SQLException("Keine gültige Vertragsnummer");
 			throw e2;
 		}
-		addObjekt(estate);
+		//addObjekt(estate);
 		
-		return 0; // unused
+		// unused
+		return 0;
 	}
 
 	@Override

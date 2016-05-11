@@ -31,8 +31,8 @@ public interface IDB2  {
 	public List<Estate> getHouses(String login);
 	public List<Estate> getApartments(String login) ;
 	public void deleteEstate(Estate estate) ;
-	public void addApartment(Apartment apartment) ;
-	public void addHouse(House house) ;
+	public void addApartment(Apartment apartment) throws SQLException;
+	public void addHouse(House house) throws SQLException;
 	public int addEstate(Estate estate) throws SQLException;
 	public void updateEstate(Estate estate);
 	public void updateApartment(Apartment estate) throws SQLException ;
